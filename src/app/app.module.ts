@@ -11,6 +11,7 @@ import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
+import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SharedModule } from './shared/shared.module';
     InicioComponent,
     ProductoComponent,
     LoginComponent,
-    NosotrosComponent
+    NosotrosComponent,
+    CatalogoComponent
   ],
   imports: [
     BrowserModule,
