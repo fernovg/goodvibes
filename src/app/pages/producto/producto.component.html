@@ -1,6 +1,23 @@
 <app-navbar></app-navbar>
 
-<br><br>
+<div class="container my-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+      <li class="breadcrumb-item">
+        <a class="link-body-emphasis"routerLink="/inico">
+          <i class="fa-solid fa-house"></i>
+          <span class="visually-hidden">Inicio</span>
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a class="link-body-emphasis fw-semibold text-decoration-none" routerLink="/catalogo">Catalogo</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Producto
+      </li>
+    </ol>
+  </nav>
+</div>
 
 <div class="container">
   <div class="row mb-3 text-center">
