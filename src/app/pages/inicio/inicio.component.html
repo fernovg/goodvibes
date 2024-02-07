@@ -1,45 +1,14 @@
 <app-navbar></app-navbar>
 
-<!-- Hero -->
-<div lc-helper="background" class="container-fluid py-5 mb-4 d-flex justify-content-center" style="
-    background-image: url('../../../assets/baner.jpg');
-    background-position: center;
-    background-size:cover;
-    background-repeat:no-repeat">
-        <div class="p-5 mb-4 lc-block col-xxl-7 col-lg-8 col-12" style="
-            backdrop-filter: blur(1px) saturate(102%);
-            -webkit-backdrop-filter: blur(1px) saturate(102%);
-            background-color: rgba(255, 255, 255, 0.45);
-            border-radius: 12px;
-            border: 1px solid rgba(209, 213, 219, 0.3);">
-            <div class="lc-block">
-                <div>
-                    <h2 class="fw-bolder text-center" style="font-size: 50px;">Good Vibes</h2>
-                </div>
-            </div>
-            <div class="lc-block col-md-12">
-                <div editable="rich">
-                    <p class="text-center" style="font-size: 26px;">Crea tu estilo
-                    </p>
-                </div>
-            </div>
-            <div class="lc-block col-md-12 text-center">
-                <a class="btn btn-outline-dark center-block" routerLink="/catalogo" role="button">Comprar</a>
-            </div>
-        </div>
-</div>
-<!-- Hero -->
-
-<div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold text-body-emphasis">Es un gusto conocerte</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Te doy la bienvenida a mi blog, donde puedo compartir mi mayor inspiración y mostrar con franqueza las diferentes perspectivas de mi pasión por la perfección. Desde que lancé mi sitio web, ha estado generando mucha expectativa, lo que ha aumentado la cantidad de seguidores día a día. Te invito a que explores mi contenido y conozcas lo que me motiva. Contáctame y forma parte; me alegrará saber de ti.</p>
-    </div>
-</div>
+<app-heroes></app-heroes>
 
 <div class="container">
-    <h1 class="display-5 fw-bold text-body-emphasis text-center">Destacado</h1>
+    <h1 class="display-5 fw-bold text-body-emphasis text-center" style="font-size: 40px;">Destacado</h1>
     <app-tar-prod></app-tar-prod>
+    <br>
+    <div class="lc-block col-md-12 text-center">
+        <a class="btn btn-outline-dark center-block" routerLink="/catalogo" role="button">Ver mas</a>
+    </div>
 </div>
-
+<br>
 <app-footer></app-footer>

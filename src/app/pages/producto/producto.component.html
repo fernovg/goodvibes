@@ -1,21 +1,39 @@
 <app-navbar></app-navbar>
-<p>producto works!</p>
-<div class="container my-5">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-chevron p-3 bg-body-tertiary rounded-3">
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis" href="#">
-            <i class="fa-solid fa-house"></i>
-            <span class="visually-hidden">inicio</span>
-          </a>
-        </li>
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis fw-semibold text-decoration-none" href="#">Catalogo</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Data
-        </li>
-      </ol>
-    </nav>
+
+<br><br>
+
+<div class="container">
+  <div class="row mb-3 text-center">
+    <div class="col-sm-6 col-lg-8 themed-grid-col">
+
+      <!-- carrusel -->
+      <app-gale-prod></app-gale-prod>
+  
+    </div>
+    <div class="col-6 col-lg-4 themed-grid-col text-start">
+
+      <!-- informacion -->
+      <div class="row mt-5">
+        <div class="col-md-6">
+            <h2>Nombre del Producto</h2>
+            <p>Descripción corta del producto.</p>
+            <p>Precio: $99.99</p>
+            <p>Disponibilidad: En Stock</p>
+        </div>
+      </div>
+      <div class="row mt-5">
+          <div class="col">
+              <h3>Detalles del Producto</h3>
+              <ul>
+                  <li>Detalles adicionales sobre el producto.</li>
+                  <li>Más información sobre el producto.</li>
+                  <li>Características específicas.</li>
+              </ul>
+          </div>
+      </div>
+      
+    </div>
+  </div>
 </div>
+
 <app-footer></app-footer>

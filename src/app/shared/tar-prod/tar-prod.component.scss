@@ -16,3 +16,9 @@
     border: none; /* Para eliminar el borde de las tarjetas */
     box-shadow: none; /* Para eliminar la sombra de las tarjetas */
 }
+
+.card:hover{
+    background-color: #F0E5DD;
+    border: none;
+    border-radius: none;
+}

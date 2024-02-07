@@ -7,6 +7,8 @@ import { ComentariosComponent } from './comentarios/comentarios.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HeroesComponent } from './heroes/heroes.component';
+import { GaleProdComponent } from './gale-prod/gale-prod.component';
 
 
 
@@ -15,13 +17,17 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     TarProdComponent,
     FooterComponent,
-    ComentariosComponent
+    ComentariosComponent,
+    HeroesComponent,
+    GaleProdComponent
   ],
   exports:[
     NavbarComponent,
     TarProdComponent,
     FooterComponent,
-    ComentariosComponent
+    ComentariosComponent,
+    HeroesComponent,
+    GaleProdComponent
   ],
   imports: [
     CommonModule,
