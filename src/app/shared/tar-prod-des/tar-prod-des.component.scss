@@ -1,0 +1,24 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+}
+
+.card {
+    background: none;
+    border: none; /* Para eliminar el borde de las tarjetas */
+    box-shadow: none; /* Para eliminar la sombra de las tarjetas */
+}
+
+.card:hover{
+    background-color: #F0E5DD;
+    border: none;
+    border-radius: none;
+}

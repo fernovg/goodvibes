@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { LoginComponent } from './pages/login/login.component';
+import { NgmaterialModule } from './ngmaterial/ngmaterial.module';
+import { GaleriaComponent } from './pages/galeria/galeria.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { LoginComponent } from './pages/login/login.component';
     ProductoComponent,
     NosotrosComponent,
     CatalogoComponent,
-    LoginComponent
+    LoginComponent,
+    GaleriaComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,8 @@ import { LoginComponent } from './pages/login/login.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    NgmaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

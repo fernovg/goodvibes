@@ -1,0 +1,49 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../services/auth.guard';
+import { ProductosComponent } from './pages/productos/productos.component';
+import { InicioComponent } from './pages/inicio/inicio.component';
+import { RegistroprodComponent } from './pages/registroprod/registroprod.component';
+import { EditarProdComponent } from './pages/editar-prod/editar-prod.component';
+import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
+
+const routes: Routes = [
+  {
+    path:'',
+    canActivate: [ AuthGuard ],
+    canLoad: [ AuthGuard ],
+    children:[
+      {
+        path: 'inicio',
+        canActivate: [ AuthGuard ],
+        component: InicioComponent
+      },{
+        path: 'productos',
+        canActivate: [ AuthGuard ],
+        component: ProductosComponent
+      },{
+        path: 'registro_producto',
+        canActivate: [ AuthGuard ],
+        component: RegistroprodComponent
+      },{
+        path: 'editar_producto/:id',
+        canActivate: [ AuthGuard ],
+        component: EditarProdComponent
+      },{
+        path: 'verproducto/:id',
+        canActivate: [ AuthGuard ],
+        component: VerProdComponent
+      },{
+        path: '',
+        redirectTo: 'inicio',
+        pathMatch: 'full'
+      }
+    ]
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class AdminRoutingModule { }

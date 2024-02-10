@@ -1,15 +1,18 @@
 *{
     font-size: 14pt;
-    /* color: white; */
-  }
+}
   
   @media screen and (min-width:992px){
       .nav-item {
-      line-height:80px;
+        line-height:80px;
       }
-    }
+  }
   
-    .nav-link:hover{
-      color: #fff4ed;
-    }
+  .nav-link:hover{
+    color: #fff4ed;
+  }
+
+  .selec:hover{
+    background-color: #fff4ed;
+  }
   

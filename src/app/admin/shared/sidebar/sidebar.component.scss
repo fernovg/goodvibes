@@ -1,0 +1,26 @@
+*{
+    font-size: 14pt;
+    color: black;
+}
+
+@media screen and (min-width:992px){
+    .nav-item {
+        line-height: 80px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    *{
+        font-size: 16pt;
+    }
+}
+
+a:hover{
+    color: #fff4ed;
+}
+
+.selec:hover{
+    color: #000000;
+}
+
+

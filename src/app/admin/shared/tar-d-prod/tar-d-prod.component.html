@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <div class="col-md-3" *ngFor="let producto of prodTienda">
+            <div class="card bgcard">
+                <img class="" width="100%" style="border-radius: 5px;" src="{{producto.foto1}}" alt="{{producto.Nombre}}" title="{{producto.Nombre}}">
+                <div class="card-body">
+                    <p class="card-text">
+                        Nombre: {{producto.Nombre}}
+                        <br>
+                        Precio: {{producto.precio | currency }}
+                        <br>
+                        Disponibilidad: {{producto.stock}}
+                    </p>                   
+                </div>
+
+                <div class="container-card-footer align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-eye"></i></button>
+                      <button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button>
+                      <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(producto)"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <small class="text-body-secondary">{{producto.fecha}} {{producto.hora}}</small>
+                </div>
+            </div>
+        </div>
+
+    </div>  
+</div>

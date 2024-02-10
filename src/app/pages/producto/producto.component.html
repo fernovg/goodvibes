@@ -13,7 +13,7 @@
         <a class="link-body-emphasis fw-semibold text-decoration-none" routerLink="/catalogo">Catalogo</a>
       </li>
       <li class="breadcrumb-item active" aria-current="page">
-        Producto
+        {{producto?.Nombre}}
       </li>
     </ol>
   </nav>
@@ -21,10 +21,10 @@
 
 <div class="container">
   <div class="row mb-3 text-center">
-    <div class="col-sm-6 col-lg-8 themed-grid-col">
+    <div class="col-sm-6 col-lg-8 themed-grid-col" *ngIf="producto">
 
       <!-- carrusel -->
-      <app-gale-prod></app-gale-prod>
+      <app-gale-prod [producto]="producto"></app-gale-prod>
   
     </div>
     <div class="col-6 col-lg-4 themed-grid-col text-start">
@@ -32,10 +32,10 @@
       <!-- informacion -->
       <div class="row mt-5">
         <div class="col-md-6">
-            <h2>Nombre del Producto</h2>
-            <p>Descripción corta del producto.</p>
-            <p>Precio: $99.99</p>
-            <p>Disponibilidad: En Stock</p>
+            <h2>{{producto?.Nombre}}</h2>
+            <p>{{producto?.descripcion}}</p>
+            <p>Precio: {{producto?.precio | currency }}</p>
+            <p>Disponibilidad: {{producto?.stock}}</p>
         </div>
       </div>
       <div class="row mt-5">

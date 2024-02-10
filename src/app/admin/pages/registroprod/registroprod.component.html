@@ -1,0 +1,66 @@
+<app-sidebar></app-sidebar>
+
+<br>
+<div class="container mt-5">
+    <div class="col-md-8">
+        <h2 class="mb-4">Registro de Producto</h2>
+        <div class="card">
+            <form action="procesar_registro.php" method="POST" enctype="multipart/form-data">
+
+                <div class="form-group">
+                    <label for="Nombre">Nombre del Producto:</label>
+                    <input type="text" class="form-control" name="Nombre" placeholder="Ingrese el nombre del producto" [(ngModel)]="request.Nombre" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea class="form-control" name="Descripcion" rows="3" placeholder="Ingrese una descripción del producto" [(ngModel)]="request.Descripcion" required></textarea>
+                </div>
+        
+                <div class="form-group">
+                    <label for="precio">Precio:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" name="Precio" placeholder="Ingrese el precio" [(ngModel)]="request.Precio" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">cate:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" name="Cate" placeholder="Ingrese el Cate" [(ngModel)]="request.Cate" step="0.01" required>
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="stock">Stock:</label>
+                    <input type="number" class="form-control" name="Stock" placeholder="Ingrese la cantidad en stock" [(ngModel)]="request.Stock" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Foto</label>
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected($event)">
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Foto</label>
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected2($event)">
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Foto</label>
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected3($event)">
+                </div>
+        
+                <button type="submit" class="btn btn-primary" (click)="guardar()">Registrar Producto</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+<br><br>

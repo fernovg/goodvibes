@@ -1,0 +1,33 @@
+.card{
+    box-shadow: 2px 2px 10px #DADADA;
+    margin: 5px;
+    // padding: 10px 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: .3s linear all;
+  }
+
+  .card:hover{
+    box-shadow: 4px 4px 20px #b7a1a1;
+    transition: .3s linear all;
+  }
+
+  .card.bgcard{
+    background-color: #e6dbc2;
+    color: #000000;
+  }
+
+  .container-card-footer{
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btnbg{
+    border: 1px solid #b79058;
+  }
+
+  .btnbg:hover{
+    border: 1px solid #b79058;
+    background-color: #b79058;
+  }

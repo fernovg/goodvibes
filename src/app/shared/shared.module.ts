@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HeroesComponent } from './heroes/heroes.component';
 import { GaleProdComponent } from './gale-prod/gale-prod.component';
+import { TarProdDesComponent } from './tar-prod-des/tar-prod-des.component';
 
 
 
@@ -19,7 +20,8 @@ import { GaleProdComponent } from './gale-prod/gale-prod.component';
     FooterComponent,
     ComentariosComponent,
     HeroesComponent,
-    GaleProdComponent
+    GaleProdComponent,
+    TarProdDesComponent
   ],
   exports:[
     NavbarComponent,
@@ -27,7 +29,8 @@ import { GaleProdComponent } from './gale-prod/gale-prod.component';
     FooterComponent,
     ComentariosComponent,
     HeroesComponent,
-    GaleProdComponent
+    GaleProdComponent,
+    TarProdDesComponent
   ],
   imports: [
     CommonModule,

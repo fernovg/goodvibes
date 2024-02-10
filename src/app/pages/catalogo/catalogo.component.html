@@ -17,16 +17,26 @@
                     <h2 class="fw-bolder text-center" style="font-size: 50px;">Catalogo</h2>
                 </div>
             </div>
-            <!-- <div class="lc-block col-md-12">
-                <div editable="rich">
-                    <p class="text-center" style="font-size: 26px;">Crea tu estilo
-                    </p>
-                </div>
-            </div> -->
         </div>
 </div>
 <!-- Hero -->
 
-<app-tar-prod></app-tar-prod>
+<div class="container my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis" routerLink="/inico">
+            <i class="fa-solid fa-house"></i>
+            <span class="visually-hidden">Inicio</span>
+          </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Catalogo
+        </li>
+      </ol>
+    </nav>
+</div>
 
+<app-tar-prod></app-tar-prod>
+<br><br>
 <app-footer></app-footer>
