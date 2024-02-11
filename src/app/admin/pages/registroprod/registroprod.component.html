@@ -1,10 +1,34 @@
 <app-sidebar></app-sidebar>
 
 <br>
-<div class="container mt-5">
-    <div class="col-md-8">
-        <h2 class="mb-4">Registro de Producto</h2>
-        <div class="card">
+<div class="container my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis" href="dashboard/inicio">
+            <i class="fa-solid fa-house"></i>
+            <span class="visually-hidden">Inicio</span>
+          </a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" href="dashboard/productos">Producto</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Registro
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+<div class="container">
+    
+    <div class="text-center">
+        <h1>Registro de Producto</h1>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <div class="card p-5">
+
             <form action="procesar_registro.php" method="POST" enctype="multipart/form-data">
 
                 <div class="form-group">
@@ -20,22 +44,19 @@
                 <div class="form-group">
                     <label for="precio">Precio:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                        </div>
                         <input type="number" class="form-control" name="Precio" placeholder="Ingrese el precio" [(ngModel)]="request.Precio" step="0.01" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="precio">cate:</label>
+                    <label for="precio">Categoria:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">$</span>
-                        </div>
-                        <input type="number" class="form-control" name="Cate" placeholder="Ingrese el Cate" [(ngModel)]="request.Cate" step="0.01" required>
+                        <select [(ngModel)]="request.Cate" class="form-select" name="Cate">
+                            <option value="" selected disabled>Selecciona una categoria</option>
+                            <option *ngFor="let cate of categoria" value="{{cate.id}}">{{cate.Nombre}}</option>
+                        </select>
                     </div>
-                </div>
+                </div>                  
         
                 <div class="form-group">
                     <label for="stock">Stock:</label>
@@ -56,11 +77,14 @@
                     <label for="formFile" class="form-label">Foto</label>
                     <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected3($event)">
                 </div>
+
+                <hr>
         
-                <button type="submit" class="btn btn-primary" (click)="guardar()">Registrar Producto</button>
+                <button type="submit" class="btn btnbg d-flex" (click)="guardar()">Registrar Producto</button>
 
             </form>
+
         </div>
     </div>
+
 </div>
-<br><br>

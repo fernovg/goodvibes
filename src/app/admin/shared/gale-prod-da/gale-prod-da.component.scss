@@ -1,0 +1,22 @@
+.imgG img {
+    max-width: 420px;
+    max-height: 420px;
+}
+
+.imgP img {
+    width: 60px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.imgP img.selected {
+    background-color: #d8c7a2;
+    opacity: 0.5;
+}
+
+@media (max-width: 980px) {
+    .imgG img {
+        max-width: 350px;
+        max-height: 350px;
+    }
+}

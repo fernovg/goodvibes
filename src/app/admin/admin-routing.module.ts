@@ -26,11 +26,11 @@ const routes: Routes = [
         canActivate: [ AuthGuard ],
         component: RegistroprodComponent
       },{
-        path: 'editar_producto/:id',
+        path: 'editar_producto/:Id',
         canActivate: [ AuthGuard ],
         component: EditarProdComponent
       },{
-        path: 'verproducto/:id',
+        path: 'verproducto/:Id',
         canActivate: [ AuthGuard ],
         component: VerProdComponent
       },{

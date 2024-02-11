@@ -26,7 +26,8 @@ import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
     SharedModule,
     AdminRoutingModule,
     NgmaterialModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

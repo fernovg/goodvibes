@@ -24,7 +24,7 @@ export interface producto {
     foto3: string;
     fecha: string;
     hora: string;
-  }
+}
 
 export class registroP{
     message?: string;
@@ -36,7 +36,12 @@ export class borrarP{
     result?: boolean;
 }
 
-export class editarrP{
+export class editarP{
     message?: string;
     result?: boolean;
+}
+
+export interface categorias {
+    id: string;
+    Nombre: string;
 }

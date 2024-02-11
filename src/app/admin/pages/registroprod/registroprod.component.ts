@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { categorias } from 'src/app/models/tienda.models';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
 
@@ -9,6 +10,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./registroprod.component.scss']
 })
 export class RegistroprodComponent {
+
+  categoria: categorias[] = [];
 
   request = {
     Nombre: "",
@@ -28,6 +31,7 @@ export class RegistroprodComponent {
 
   ngOnInit(): void {
     this.verificarConexion();
+    this.categorias();
   }
 
     //! FOTO
@@ -37,8 +41,6 @@ export class RegistroprodComponent {
     base: string = "";
     base2: string = "";
     base3: string = "";
-    base4: string = "";
-    base5: string = "";
   
     addFile() {
       this.uploader.nativeElement.click();
@@ -177,6 +179,12 @@ export class RegistroprodComponent {
 
     //* Fin de Uso sin conexion
 
+    categorias(){
+      this.tiendaService.getCategoria().subscribe( categorias => {
+        this.categoria = categorias;
+      })
+    }
+
     guardar(){
       if (!navigator.onLine) {
         // No hay conexión a Internet, guardar datos localmente
@@ -186,6 +194,7 @@ export class RegistroprodComponent {
       this.request.Foto1=this.base;
       this.request.Foto2=this.base2;
       this.request.Foto3=this.base3;
+      console.log(this.request);
       if (this.request.Nombre == "") {
         this.mostrarMensajeError("Falta El Nombre");
         return

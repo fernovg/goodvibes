@@ -1,0 +1,9 @@
+<div class="">
+    <div class="imgG text-center">
+      <img [src]="selectedImage" alt="Preview Image">
+    </div>
+    <br><br>
+    <div class="imgP">
+      <img *ngFor="let image of images" [src]="image" (click)="selectImage(image)" [ngClass]="{'selected': image === selectedImage}" >
+    </div>
+</div>

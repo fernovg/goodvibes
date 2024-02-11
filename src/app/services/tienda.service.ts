@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { prodTienda, registroP, borrarP, editarrP, producto } from '../models/tienda.models';
+import { prodTienda, registroP, borrarP, editarP, producto, categorias } from '../models/tienda.models';
 import { Environments } from 'src/environments/env.constant';
 
 @Injectable({
@@ -67,11 +67,20 @@ export class TiendaService {
             .set('Descripcion', data.Descripcion)  
             .set('Precio',data.Precio)
             .set('Stock', data.Stock)
+            .set('Cate', data.Cate)
+            .set('Foto1', data.Foto1)
+            .set('Foto2', data.Foto2)
+            .set('Foto3', data.Foto3)
       return this.http.post<any>(`${Environments.API_ENDPOINT}/tienda/editar.php`, body).pipe(
-            map((editarrP:editarrP) => {
-                return editarrP;
+            map((editarP:editarP) => {
+                return editarP;
             })
     )
+  }
+
+  getCategoria():Observable<categorias[]>{
+    const url = `${Environments.API_ENDPOINT}/tienda/categoria.php`;
+      return  this.http.get<categorias[]>(url)
   }
   
 }

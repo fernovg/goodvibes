@@ -16,11 +16,11 @@
 
                 <div class="container-card-footer align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-eye"></i></button>
-                      <button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button>
+                      <a [routerLink]="['../verproducto', producto.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a>
+                      <a [routerLink]="['../editar_producto', producto.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a>
                       <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(producto)"><i class="fa-solid fa-trash"></i></button>
                     </div>
-                    <small class="text-body-secondary">{{producto.fecha}} {{producto.hora}}</small>
+                    <small class="text-body-secondary">{{producto.fecha | date}} {{producto.hora}}</small>
                 </div>
             </div>
         </div>

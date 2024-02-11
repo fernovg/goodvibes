@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/autenticacion.service';
 
 @Component({
   selector: 'app-inicio',
@@ -6,5 +8,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent {
+
+  constructor(
+    private auth: AuthenticationService,
+    private router: Router
+  ){}
+
+
+  ngOnInit(){    
+    if(this.auth.currentUserValue.tipo === "admin"){
+      this.router.navigate(['/dashboard'])
+    }
+  }
 
 }
