@@ -195,6 +195,14 @@ export class EditarProdComponent {
           producto => {
             this.producto = producto;
             this.request.Id = producto.id;
+            this.request.Nombre = producto.Nombre;
+            this.request.Descripcion = producto.descripcion;
+            this.request.Precio = producto.precio.toString();
+            this.request.Cate = producto.categoria;
+            this.request.Stock = producto.stock.toString();
+            this.request.Foto1 = producto.foto1;
+            this.request.Foto2 = producto.foto2;
+            this.request.Foto3 = producto.foto3;
           }
         );
       });

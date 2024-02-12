@@ -1,5 +1,6 @@
 <app-sidebar></app-sidebar>
 <br>
+
 <div class="container my-4">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
@@ -14,6 +15,17 @@
         </li>
       </ol>
     </nav>
+
+    <div class="dropdown">
+      <a class="btn btn-dropdown dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Gestion
+      </a>
+    
+      <ul class="dropdown-menu bgsec">
+        <li><a class="dropdown-item" routerLink="../registro_producto">Nuevo producto</a></li>
+        <li><a class="dropdown-item" href="#">Nueva Categoria</a></li>
+      </ul>
+    </div>
 </div>
 
 <app-tar-d-prod></app-tar-d-prod>

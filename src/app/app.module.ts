@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NgmaterialModule } from './ngmaterial/ngmaterial.module';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,13 @@ import { GaleriaComponent } from './pages/galeria/galeria.component';
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule,
-    NgmaterialModule
+    NgmaterialModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
