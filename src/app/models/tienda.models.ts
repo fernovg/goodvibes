@@ -45,3 +45,9 @@ export interface categorias {
     id: string;
     Nombre: string;
 }
+
+export interface totalpCat {
+    idCate: number;
+    categoria: string;
+    total_productos: string;
+}

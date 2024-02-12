@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { prodTienda, registroP, borrarP, editarP, producto, categorias } from '../models/tienda.models';
+import { prodTienda, registroP, borrarP, editarP, producto, categorias, totalpCat } from '../models/tienda.models';
 import { Environments } from 'src/environments/env.constant';
 
 @Injectable({
@@ -81,6 +81,11 @@ export class TiendaService {
   getCategoria():Observable<categorias[]>{
     const url = `${Environments.API_ENDPOINT}/tienda/categoria.php`;
       return  this.http.get<categorias[]>(url)
+  }
+
+  getPrpCate():Observable<totalpCat[]>{
+    const url = `${Environments.API_ENDPOINT}/tienda/totalprod.php`;
+    return this.http.get<totalpCat[]>(url)
   }
   
 }
