@@ -134,6 +134,7 @@ export class EditarProdComponent {
         this.mostrarMensajeError("Pesa mucho");
       }
     }
+    
     //! FIN FOTO
 
     //* Uso sin conexion
@@ -218,7 +219,6 @@ export class EditarProdComponent {
       this.request.Foto1=this.base;
       this.request.Foto2=this.base2;
       this.request.Foto3=this.base3;
-      console.log(this.request);
       if (this.request.Nombre == "") {
         this.mostrarMensajeError("Falta El Nombre");
         return

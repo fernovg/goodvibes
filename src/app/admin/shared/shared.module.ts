@@ -5,6 +5,7 @@ import { AdminRoutingModule } from '../admin-routing.module';
 import { TarDashComponent } from './tar-dash/tar-dash.component';
 import { TarDProdComponent } from './tar-d-prod/tar-d-prod.component';
 import { GaleProdDaComponent } from './gale-prod-da/gale-prod-da.component';
+import { TarDGaleComponent } from './tar-d-gale/tar-d-gale.component';
 
 
 
@@ -13,13 +14,15 @@ import { GaleProdDaComponent } from './gale-prod-da/gale-prod-da.component';
     SidebarComponent,
     TarDashComponent,
     TarDProdComponent,
-    GaleProdDaComponent
+    GaleProdDaComponent,
+    TarDGaleComponent
   ],
   exports:[
     SidebarComponent,
     TarDashComponent,
     TarDProdComponent,
-    GaleProdDaComponent
+    GaleProdDaComponent,
+    TarDGaleComponent
   ],
   imports: [
     CommonModule,

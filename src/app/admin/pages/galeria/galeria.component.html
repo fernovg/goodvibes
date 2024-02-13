@@ -1,0 +1,31 @@
+<app-sidebar></app-sidebar>
+
+<br>
+
+<div class="container my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis" href="dashboard/inicio">
+            <i class="fa-solid fa-house"></i>
+            <span class="visually-hidden">Inicio</span>
+          </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            Galeria
+        </li>
+      </ol>
+    </nav>
+
+    <div class="dropdown">
+      <a class="btn btn-dropdown dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Gestion
+      </a>
+    
+      <ul class="dropdown-menu bgsec">
+        <li><a class="dropdown-item" routerLink="../publicar">Nueva publucacion</a></li>
+      </ul>
+    </div>
+</div>
+
+<app-tar-d-gale></app-tar-d-gale>

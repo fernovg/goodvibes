@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { totalPub } from 'src/app/models/galeria.models';
 import { prodTienda, totalpCat } from 'src/app/models/tienda.models';
+import { GaleriaService } from 'src/app/services/galeria.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
@@ -11,14 +13,17 @@ export class TarDashComponent {
 
   prodTienda: prodTienda[] = [];
   totalpCat: totalpCat[] = [];
+  totalPub! : totalPub | undefined;
 
   constructor(
     private tiendaService: TiendaService,
+    private galeriaService: GaleriaService
   ){}
 
   ngOnInit(): void {
     this.getProd();
     this.getPrpCat();
+    this.getTPub();
   }
 
   getProd(){
@@ -33,5 +38,10 @@ export class TarDashComponent {
     })
   }
 
+  getTPub(){
+    this.galeriaService.getTotal().subscribe( totalPub => {
+      this.totalPub = totalPub;
+    })
+  }
   
 }

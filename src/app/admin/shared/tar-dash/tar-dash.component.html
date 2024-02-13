@@ -29,12 +29,16 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card bgcard text-center">
-                <div class="card-header fs-4">Hola</div>
-                <div class="card-body">
-                    content
+            <div class="card bgcard text-center" routerLink="/dashboard/galerias">
+                <div class="card-header fs-4">
+                    <i class="fa-solid fa-image"></i>
+                    Galeria
                 </div>
-                <div class="card-footer">Ultima Actualizacion 10/10/10 12:12</div>
+                <div class="card-body">
+                    Publicaciones: {{totalPub?.Total}}
+                    <br>
+                    Fotos: {{totalPub?.fotos}}
+                </div>
             </div>
         </div>
 

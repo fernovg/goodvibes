@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <div class="col-md-3" *ngFor="let gale of galeria">
+            <div class="card bgcard">
+                <img class="" width="100%" style="border-radius: 5px;" src="{{gale.foto}}" alt="" title="">
+                <div class="card-body">
+                    <p class="card-text">
+                        Nombre: {{gale.descripcion}}
+                        <br>
+                        Publicado Por: {{gale.nombre}}
+                    </p>                   
+                </div>
+
+                <div class="container-card-footer align-items-center">
+                    <div class="btn-group">
+                      <a [routerLink]="['../verproducto', ]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a>
+                      <a [routerLink]="['../editar_producto', ]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a>
+                      <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(gale)"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                    <small class="text-body-secondary">{{gale.fecha | date}} {{gale.hora}}</small>
+                </div>
+            </div>
+        </div>
+
+    </div>  
+</div>

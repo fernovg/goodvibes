@@ -6,6 +6,8 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { RegistroprodComponent } from './pages/registroprod/registroprod.component';
 import { EditarProdComponent } from './pages/editar-prod/editar-prod.component';
 import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
+import { GaleriaComponent } from './pages/galeria/galeria.component';
+import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
 
 const routes: Routes = [
   {
@@ -33,6 +35,14 @@ const routes: Routes = [
         path: 'verproducto/:Id',
         canActivate: [ AuthGuard ],
         component: VerProdComponent
+      },{
+        path: 'galerias',
+        canActivate: [ AuthGuard ],
+        component: GaleriaComponent
+      },{
+        path: 'publicar',
+        canActivate: [ AuthGuard ],
+        component: NuevapubliComponent
       },{
         path: '',
         redirectTo: 'inicio',

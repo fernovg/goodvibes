@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { HeroesComponent } from './heroes/heroes.component';
 import { GaleProdComponent } from './gale-prod/gale-prod.component';
 import { TarProdDesComponent } from './tar-prod-des/tar-prod-des.component';
+import { TarGaleComponent } from './tar-gale/tar-gale.component';
 
 
 
@@ -21,7 +22,8 @@ import { TarProdDesComponent } from './tar-prod-des/tar-prod-des.component';
     ComentariosComponent,
     HeroesComponent,
     GaleProdComponent,
-    TarProdDesComponent
+    TarProdDesComponent,
+    TarGaleComponent
   ],
   exports:[
     NavbarComponent,
@@ -30,7 +32,8 @@ import { TarProdDesComponent } from './tar-prod-des/tar-prod-des.component';
     ComentariosComponent,
     HeroesComponent,
     GaleProdComponent,
-    TarProdDesComponent
+    TarProdDesComponent,
+    TarGaleComponent
   ],
   imports: [
     CommonModule,

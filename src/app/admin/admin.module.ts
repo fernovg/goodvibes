@@ -10,6 +10,8 @@ import { InicioComponent } from './pages/inicio/inicio.component';
 import { RegistroprodComponent } from './pages/registroprod/registroprod.component';
 import { EditarProdComponent } from './pages/editar-prod/editar-prod.component';
 import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
+import { GaleriaComponent } from './pages/galeria/galeria.component';
+import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
 
 
 
@@ -19,7 +21,9 @@ import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
     InicioComponent,
     RegistroprodComponent,
     EditarProdComponent,
-    VerProdComponent
+    VerProdComponent,
+    GaleriaComponent,
+    NuevapubliComponent
   ],
   imports: [
     CommonModule,

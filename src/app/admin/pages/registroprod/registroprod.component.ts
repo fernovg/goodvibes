@@ -231,7 +231,7 @@ export class RegistroprodComponent {
             showConfirmButton: false,
             timer: 1500
           });
-          // this.router.navigate(['/dashboard/productos'])
+          this.router.navigate(['/dashboard/productos'])
         }
       })
     }
