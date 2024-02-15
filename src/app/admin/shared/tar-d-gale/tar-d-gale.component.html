@@ -14,8 +14,8 @@
 
                 <div class="container-card-footer align-items-center">
                     <div class="btn-group">
-                      <a [routerLink]="['../verproducto', ]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a>
-                      <a [routerLink]="['../editar_producto', ]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a>
+                      <a [routerLink]="['../verpublicacion', gale.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a>
+                      <a [routerLink]="['../editarpublicacion', gale.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a>
                       <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(gale)"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <small class="text-body-secondary">{{gale.fecha | date}} {{gale.hora}}</small>

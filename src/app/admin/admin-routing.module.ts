@@ -8,6 +8,8 @@ import { EditarProdComponent } from './pages/editar-prod/editar-prod.component';
 import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
 import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
+import { VerpubliComponent } from './pages/galeria/verpubli.component';
+import { EditarpubliComponent } from './pages/galeria/editarpubli.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,14 @@ const routes: Routes = [
         path: 'publicar',
         canActivate: [ AuthGuard ],
         component: NuevapubliComponent
+      },{
+        path: 'verpublicacion/:Id',
+        canActivate: [ AuthGuard ],
+        component: VerpubliComponent  
+      },{
+        path: 'editarpublicacion/:Id',
+        canActivate: [ AuthGuard ],
+        component: EditarpubliComponent  
       },{
         path: '',
         redirectTo: 'inicio',

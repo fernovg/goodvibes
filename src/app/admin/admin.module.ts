@@ -12,6 +12,8 @@ import { EditarProdComponent } from './pages/editar-prod/editar-prod.component';
 import { VerProdComponent } from './pages/ver-prod/ver-prod.component';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
 import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
+import { VerpubliComponent } from './pages/galeria/verpubli.component';
+import { EditarpubliComponent } from './pages/galeria/editarpubli.component';
 
 
 
@@ -23,7 +25,9 @@ import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
     EditarProdComponent,
     VerProdComponent,
     GaleriaComponent,
-    NuevapubliComponent
+    NuevapubliComponent,
+    VerpubliComponent,
+    EditarpubliComponent
   ],
   imports: [
     CommonModule,

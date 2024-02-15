@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Environments } from 'src/environments/env.constant';
-import { galeria, resPubli, totalPub } from '../models/galeria.models';
+import { galeria, resPubli, totalPub, publica } from '../models/galeria.models';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,28 @@ export class GaleriaService {
             map((resPubli:resPubli) => {
                 return resPubli;
             })
+      )
+    }
+
+    getPublicacion(data:any){
+      const body = new HttpParams()
+         .set('Id',data.Id)
+        return this.http.post<any>(`${Environments.API_ENDPOINT}/galeria/publicacion.php`, body).pipe(
+          map((publica:publica) => {
+              return publica;
+          })
+        )
+    }
+
+    getEditar(data:any){
+      const body = new HttpParams()
+        .set('Id',data.Id)
+        .set('Descripcion', data.Descripcion)  
+        .set('Foto',data.Foto)
+      return this.http.post<any>(`${Environments.API_ENDPOINT}/galeria/editar.php`, body).pipe(
+          map((resPubli:resPubli) => {
+              return resPubli;
+          })
       )
     }
 

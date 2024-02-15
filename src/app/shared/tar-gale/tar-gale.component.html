@@ -11,7 +11,7 @@
         <!-- Condición para mostrar la imagen si publi.foto no está vacío -->
         <img *ngIf="publi.foto" src="{{publi.foto}}" alt="{{publi.descripcion}}">
 
-        <div class="card-body conten-caption">
+        <div class="card-body conten-caption" *ngIf="publi.descripcion">
             <p class="card-text" *ngIf="publi.foto">{{publi.nombre}}: </p>
             <p class="card-text">{{publi.descripcion}}</p>
         </div>

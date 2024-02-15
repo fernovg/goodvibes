@@ -1,0 +1,27 @@
+.card{
+    width: 400px;
+}
+
+.sp-puli{
+    padding-bottom: 20px;
+}
+
+.conten-header{
+    display: flex;
+    align-items: center;
+}
+
+.conten-header-text{
+    display: flex;
+    padding-top: 15px;
+    padding-left: 10px;
+}
+
+.conten-caption{
+    display: flex;
+}
+
+.conten-caption .card-text{
+    display: flex;
+    padding: 2px;
+}

@@ -11,6 +11,7 @@ export class SidebarComponent {
 
   nombre: string | undefined;
   usuario: string | undefined;
+  foto: string | undefined;
 
   constructor(
     private auth: AuthenticationService,
@@ -20,6 +21,7 @@ export class SidebarComponent {
   ngOnInit(){
     this.nombre = this.auth.currentUserValue.nombre;
     this.usuario = this.auth.currentUserValue.tipo;
+    this.foto = this.auth.currentUserValue.foto;
     // console.log(this.nombre)
     // console.log(this.usuario)
     // console.log(this.auth.currentUserValue)

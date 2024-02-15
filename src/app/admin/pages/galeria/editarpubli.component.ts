@@ -1,37 +1,40 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { publica } from 'src/app/models/galeria.models';
 import { AuthenticationService } from 'src/app/services/autenticacion.service';
 import { GaleriaService } from 'src/app/services/galeria.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-nuevapubli',
-  templateUrl: './nuevapubli.component.html',
-  styleUrls: ['./nuevapubli.component.scss']
+  selector: 'app-editarpubli',
+  templateUrl: './editarpubli.component.html',
+  styleUrls: ['./editarpubli.component.scss']
 })
-export class NuevapubliComponent {
+export class EditarpubliComponent {
+
+  publica! : publica | undefined;
 
   request = {
+    Id: "",
     Foto: "",
-    Descripcion: "",
-    Matricula: ""
+    Descripcion: "" 
   }
 
   constructor(
     private galeriaService: GaleriaService,
     private router: Router,
     private auth: AuthenticationService,
+    private activatedRoute: ActivatedRoute,
   ){}
 
   ngOnInit(): void {
+    this.verPublicacion();
     this.verificarConexion();
   }
 
   @ViewChild('filepicker', { static: false }) uploader!: ElementRef;
 
   base: string = "";
-  base2: string = "";
-  base3: string = "";
 
   addFile() {
     this.uploader.nativeElement.click();
@@ -106,6 +109,20 @@ export class NuevapubliComponent {
       }
     }
 
+    verPublicacion(){
+      this.activatedRoute.params.subscribe(params => {
+        const id = params['Id'];
+        this.galeriaService.getPublicacion({Id: id}).subscribe(
+          publica => {
+            this.publica = publica;
+            this.request.Id = publica.id !== undefined ? publica.id.toString() : '';
+            this.request.Descripcion = publica.descripcion !== undefined ? publica.descripcion.toString() : '';
+            this.request.Foto = publica.foto !== undefined ? publica.foto.toString() : '';
+          }
+        )
+      })
+    }
+
     guardar(){
       if (!navigator.onLine) {
         // No hay conexión a Internet, guardar datos localmente
@@ -113,15 +130,18 @@ export class NuevapubliComponent {
         return;
       }
       
-      this.request.Matricula = this.auth.currentUserValue.Matricula !== undefined ? this.auth.currentUserValue.Matricula.toString() : '';
 
-      this.request.Foto=this.base;
+      if (this.base == null || this.base == undefined) {
+        this.request.Foto
+      }else{
+        this.request.Foto = this.base;
+      }
       
       if (this.request.Descripcion == "" && this.request.Foto == "") {
         this.mostrarMensajeError("Falta La Descripcion o Foto");
         return
       }
-      this.galeriaService.getPubli(this.request).subscribe({
+      this.galeriaService.getEditar(this.request).subscribe({
         next:(resPubli)=> {
           if (!resPubli.result) {
             Swal.fire({
@@ -180,6 +200,5 @@ export class NuevapubliComponent {
         });
       }
     }
-
 
 }

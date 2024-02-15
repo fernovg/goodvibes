@@ -1,0 +1,25 @@
+<app-sidebar></app-sidebar>
+
+<br><br>
+
+<div class="container sp-puli d-flex justify-content-center" >
+    <div class="card">
+        <div class="card-header conten-header">
+            <img  src="{{publica?.fotop}}" style="border-radius: 100%;" alt="{{publica?.nombre}}" width="40px">
+            <div class="conten-header-text">
+                <h3 class="card-title">{{publica?.nombre}}</h3>
+            </div>
+        </div>
+        
+        <!-- Condición para mostrar la imagen si publi.foto no está vacío -->
+        <img *ngIf="publica?.foto" src="{{publica?.foto}}" alt="{{publica?.descripcion}}">
+
+        <div class="card-body conten-caption" *ngIf="publica?.descripcion">
+            <p class="card-text">{{publica?.descripcion}}</p>
+        </div>
+
+        <div class="card-body d-flex justify-content-end">
+            <p>{{publica?.fecha | date}}</p>
+        </div>
+    </div>
+</div>
