@@ -43,12 +43,10 @@
               <p>{{producto?.descripcion}}</p>
           </div>
 
-          <a href="https://api.whatsapp.com/send?phone=7711750196&text=Hola! Quisiera saber más información sobre {{producto?.Nombre}}" target="_blank">
-            <button type="button" class="btn btnbg text-black">Para mas informacion / comprar
-              <i class="bi fa-brands fa-whatsapp" width="100" height="100">
-              </i>
-            </button>
-          </a>
+          <button type="button" class="btn btnbg text-black" (click)="irAWatsapp()">
+            Para más información / comprar
+            <i class="bi fa-brands fa-whatsapp" width="100" height="100"></i>
+          </button>
           
       </div>
       

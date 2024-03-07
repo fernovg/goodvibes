@@ -33,4 +33,12 @@ export class ProductoComponent {
     });
   }
 
+  irAWatsapp(): void {
+    const telefono = '7711750196'; // Número de teléfono de destino
+    const mensaje = `Hola! Quisiera saber más información sobre ${this.producto?.Nombre || ''}`; // Mensaje con información del producto
+    const enlace = `https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`;
+    window.open(enlace, '_blank');
+}
+
+
 }
