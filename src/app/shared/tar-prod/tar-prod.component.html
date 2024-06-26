@@ -1,4 +1,6 @@
 <div class="container">
+    <h1>Hola</h1>
+    
     <div class="grid">
         <!--  -->
         <div class="card mt-3" [routerLink]="['/catalogo/producto', producto.id]" *ngFor="let producto of prodTienda">
@@ -7,7 +9,7 @@
                 <img class="logo" src="{{producto.foto1}}" alt="{{producto.Nombre}}" title="{{producto.Nombre}}">
                 <div class="card-body">
                     <h4 class="card-title">{{producto.Nombre}}</h4>
-                    <p class="card-text">{{producto.descripcion}}</p>
+                    <!-- <p class="card-text">{{producto.descripcion}}</p> -->
                     <p class="card-text">{{producto.precio | currency}}</p>
                 </div>
             </div>

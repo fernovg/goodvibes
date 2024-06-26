@@ -51,3 +51,8 @@ export interface totalpCat {
     categoria: string;
     total_productos: string;
 }
+
+export interface editStock {
+    message?: string;
+    result?: boolean;
+}

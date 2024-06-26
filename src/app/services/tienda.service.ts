@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { prodTienda, registroP, borrarP, editarP, producto, categorias, totalpCat } from '../models/tienda.models';
+import { prodTienda, registroP, borrarP, editarP, producto, categorias, totalpCat, editStock } from '../models/tienda.models';
 import { Environments } from 'src/environments/env.constant';
 
 @Injectable({
@@ -25,7 +25,7 @@ export class TiendaService {
 
   getProducto(data:any){
     const body = new HttpParams()
-       .set('Id',data.Id)
+        .set('Id',data.Id)
       return this.http.post<any>(`${Environments.API_ENDPOINT}/tienda/producto.php`, body).pipe(
         map((producto:producto) => {
             return producto;
@@ -86,6 +86,17 @@ export class TiendaService {
   getPrpCate():Observable<totalpCat[]>{
     const url = `${Environments.API_ENDPOINT}/tienda/totalprod.php`;
     return this.http.get<totalpCat[]>(url)
+  }
+
+  editarStock(data:any){
+    const body = new HttpParams()
+        .set('Id',data.Id)
+        .set('Stock', data.Stock)
+      return this.http.post<any>(`${Environments.API_ENDPOINT}/tienda/editStock.php`, body).pipe(
+        map((editStock)=> {
+          return editStock
+        })
+      )
   }
   
 }

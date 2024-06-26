@@ -6,6 +6,7 @@ import { TarDashComponent } from './tar-dash/tar-dash.component';
 import { TarDProdComponent } from './tar-d-prod/tar-d-prod.component';
 import { GaleProdDaComponent } from './gale-prod-da/gale-prod-da.component';
 import { TarDGaleComponent } from './tar-d-gale/tar-d-gale.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -26,7 +27,8 @@ import { TarDGaleComponent } from './tar-d-gale/tar-d-gale.component';
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

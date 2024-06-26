@@ -15,10 +15,13 @@ export class InicioComponent {
   ){}
 
 
-  ngOnInit(){    
-    if(this.auth.currentUserValue.tipo === "admin"){
-      this.router.navigate(['/dashboard'])
+  ngOnInit() {    
+    const currentUser = this.auth.currentUserValue;
+    
+    if (currentUser && currentUser.tipo === "admin") {
+      this.router.navigate(['/dashboard']);
     }
   }
+  
 
 }

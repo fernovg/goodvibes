@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { prodTienda } from 'src/app/models/tienda.models';
+import { editarP, prodTienda } from 'src/app/models/tienda.models';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
 
@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 export class TarDProdComponent {
 
   prodTienda: prodTienda[] = [];
+
+  productoSeleccionado: any;
 
   constructor(
     private tiendaService: TiendaService,
@@ -58,6 +60,43 @@ export class TarDProdComponent {
         })
       }
     });
+  }
+
+
+  //* Editar el stock del producto
+  requestStock = {
+    Id: "",
+    Stock: ""
+  }
+
+  setProductoSeleccionado(producto: any): void {
+    this.productoSeleccionado = { ...producto }; // Crea una copia para evitar mutaciones directas
+    this.requestStock.Id = this.productoSeleccionado?.id;
+  }
+
+  guardarStock(){
+    this.tiendaService.editarStock(this.requestStock).subscribe({
+      next:(editStock)=>{
+        if(!editStock.result) {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: editStock.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+          return
+        }
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: editStock.message,
+          showConfirmButton: false,
+          timer: 1500
+        });
+        this.getProd();
+      }
+    })    
   }
 
 }
