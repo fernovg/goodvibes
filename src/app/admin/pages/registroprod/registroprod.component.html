@@ -3,25 +3,25 @@
 <br>
 <div class="container my-4">
     <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis" href="dashboard/inicio">
-            <i class="fa-solid fa-house"></i>
-            <span class="visually-hidden">Inicio</span>
-          </a>
-        </li>
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis fw-semibold text-decoration-none" href="dashboard/productos">Producto</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Registro
-        </li>
-      </ol>
+        <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+            <li class="breadcrumb-item">
+                <a class="link-body-emphasis" href="dashboard/inicio">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="visually-hidden">Inicio</span>
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <a class="link-body-emphasis fw-semibold text-decoration-none" href="dashboard/productos">Producto</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Registro
+            </li>
+        </ol>
     </nav>
 </div>
 
 <div class="container">
-    
+
     <div class="text-center">
         <h1>Registro de Producto</h1>
     </div>
@@ -33,18 +33,22 @@
 
                 <div class="form-group">
                     <label for="Nombre">Nombre del Producto:</label>
-                    <input type="text" class="form-control" name="Nombre" placeholder="Ingrese el nombre del producto" [(ngModel)]="request.Nombre" required>
+                    <input type="text" class="form-control" name="Nombre" placeholder="Ingrese el nombre del producto"
+                        [(ngModel)]="request.Nombre" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="descripcion">Descripción:</label>
-                    <textarea class="form-control" name="Descripcion" rows="3" placeholder="Ingrese una descripción del producto" [(ngModel)]="request.Descripcion" required></textarea>
+                    <textarea class="form-control" name="Descripcion" rows="3"
+                        placeholder="Ingrese una descripción del producto" [(ngModel)]="request.Descripcion"
+                        required></textarea>
                 </div>
-        
+
                 <div class="form-group">
                     <label for="precio">Precio:</label>
                     <div class="input-group">
-                        <input type="number" class="form-control" name="Precio" placeholder="Ingrese el precio" [(ngModel)]="request.Precio" step="0.01" required>
+                        <input type="number" class="form-control" name="Precio" placeholder="Ingrese el precio"
+                            [(ngModel)]="request.Precio" step="0.01" required>
                     </div>
                 </div>
 
@@ -56,30 +60,64 @@
                             <option *ngFor="let cate of categoria" value="{{cate.id}}">{{cate.Nombre}}</option>
                         </select>
                     </div>
-                </div>                  
-        
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Coleccion:</label>
+                    <div class="input-group">
+                        <select [(ngModel)]="request.Col" class="form-select" name="Col">
+                            <option value="" selected disabled>Selecciona una coleccion</option>
+                            <option *ngFor="let col of coleccion" value="{{col.id}}">{{col.coleccion}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Tema:</label>
+                    <div class="input-group">
+                        <select [(ngModel)]="request.Tema" class="form-select" name="Tema">
+                            <option value="" selected disabled>Selecciona un tema</option>
+                            <option *ngFor="let tem of tema" value="{{tem.id}}">{{tem.tema}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Color:</label>
+                    <div class="input-group">
+                        <select [(ngModel)]="request.Color" class="form-select" name="Color">
+                            <option value="" selected disabled>Selecciona un color</option>
+                            <option *ngFor="let colo of color" value="{{colo.id}}">{{colo.color}}</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="stock">Stock:</label>
-                    <input type="number" class="form-control" name="Stock" placeholder="Ingrese la cantidad en stock" [(ngModel)]="request.Stock" required>
+                    <input type="number" class="form-control" name="Stock" placeholder="Ingrese la cantidad en stock"
+                        [(ngModel)]="request.Stock" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Foto</label>
-                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected($event)">
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required
+                        (change)="onFileSelected($event)">
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Foto</label>
-                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected2($event)">
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required
+                        (change)="onFileSelected2($event)">
                 </div>
 
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Foto</label>
-                    <input class="form-control" type="file" id="formFile" accept="image/*" required (change)="onFileSelected3($event)">
+                    <input class="form-control" type="file" id="formFile" accept="image/*" required
+                        (change)="onFileSelected3($event)">
                 </div>
 
                 <hr>
-        
+
                 <button type="submit" class="btn btnbg d-flex" (click)="guardar()">Registrar Producto</button>
 
             </form>

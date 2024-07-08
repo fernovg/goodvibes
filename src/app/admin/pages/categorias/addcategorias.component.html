@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Registrar Nueva Categoria</h2>
+
+<mat-dialog-content class="mat-typography">
+
+    <form action="" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="Nombre">Nombre:</label>
+            <input type="text" class="form-control" name="Nombre" placeholder="Ingrese una nueva categoria" [(ngModel)]="request.Nombre" required>
+        </div>
+
+    </form>
+    
+    <br><br>
+
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close] class="btn sec" >Salir</button>
+        <button mat-button (click)="guardar()" cdkFocusInitial class="btn warn">Aceptar</button>
+    </mat-dialog-actions>
+</mat-dialog-content>

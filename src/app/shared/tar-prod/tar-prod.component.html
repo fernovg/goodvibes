@@ -1,18 +1,149 @@
 <div class="container">
-    <h1>Hola</h1>
-    
+    <div class="filtros">
+        <!-- Ordenar por Filter -->
+        <div class="dropdown">
+            <button class="btn btn-grp-filter btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Ordenar por
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="ordenar" [checked]="order === 'precioAsc'"
+                            (change)="setOrder('precioAsc')">
+                        <label class="form-check-label" (click)="setOrder('precioAsc')">
+                            Precio: Bajo a Alto
+                        </label>
+                    </div>
+                </li>
+                <li>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="ordenar"
+                            [checked]="order === 'precioDesc'" (change)="setOrder('precioDesc')">
+                        <label class="form-check-label" (click)="setOrder('precioDesc')">
+                            Precio: Alto a Bajo
+                        </label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <button class="btn btn-grp-filter btn-sb-filter" id="toggleButton" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling" aria-expanded="false"
+            aria-label="Toggle navigation">
+            Filtro
+            <i class="fa-solid fa-filter"></i>
+        </button>
+
+    </div>
+
+    <!-- cartas productos -->
     <div class="grid">
-        <!--  -->
-        <div class="card mt-3" [routerLink]="['/catalogo/producto', producto.id]" *ngFor="let producto of prodTienda">
+        <div class="card mt-3" [routerLink]="['/catalogo/producto', producto.id]"
+            *ngFor="let producto of filteredProducts">
             <div class="text-center">
                 <br>
                 <img class="logo" src="{{producto.foto1}}" alt="{{producto.Nombre}}" title="{{producto.Nombre}}">
                 <div class="card-body">
                     <h4 class="card-title">{{producto.Nombre}}</h4>
-                    <!-- <p class="card-text">{{producto.descripcion}}</p> -->
+                    <p class="card-text">{{producto.coleccion}}</p>
                     <p class="card-text">{{producto.precio | currency}}</p>
                 </div>
             </div>
         </div>
+    </div>
+
+</div>
+
+<!-- side bar filtro -->
+<div class="offcanvas offcanvas-start bgpri" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <br><br><br><br>
+
+    <div class="offcanvas-body">
+
+        <ul class="nav nav-pills flex-column mb-auto">
+
+            <mat-accordion class="accordion">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Categoria
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <!-- Categoría -->
+                    <button *ngFor="let cat of categoria" class="btn btn-filter"
+                        [class.btn-filter-off]="!selectedCategoria.has(cat.Nombre)"
+                        [class.btn-filter-on]="selectedCategoria.has(cat.Nombre)"
+                        (click)="toggleFilter('categoria', cat.Nombre)">
+                        {{ cat.Nombre }}
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion class="accordion">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Coleccion
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <!-- Colección -->
+                    <button *ngFor="let col of coleccion" class="btn btn-filter"
+                        [class.btn-filter-off]="!selectedColeccion.has(col.coleccion)"
+                        [class.btn-filter-on]="selectedColeccion.has(col.coleccion)"
+                        (click)="toggleFilter('coleccion', col.coleccion)">
+                        {{ col.coleccion }}
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion class="accordion">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Tema
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <!-- Tema -->
+                    <button *ngFor="let tem of tema" class="btn btn-filter"
+                        [class.btn-filter-off]="!selectedTema.has(tem.tema)"
+                        [class.btn-filter-on]="selectedTema.has(tem.tema)" (click)="toggleFilter('tema', tem.tema)">
+                        {{ tem.tema }}
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-accordion class="accordion">
+                <mat-expansion-panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Color
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <!-- Color -->
+                    <button *ngFor="let col of color" class="btn btn-filter"
+                        [class.btn-filter-off]="!selectedColor.has(col.color)"
+                        [class.btn-filter-on]="selectedColor.has(col.color)" (click)="toggleFilter('color', col.color)">
+                        {{ col.color }}
+                    </button>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </ul>
+        <!-- Clear All Filters Button -->
+        <div class="btn-group-sd-filter">
+            <button class="btn btn-eli-filter ms-2" [disabled]="!anyFilterSelected" (click)="clearAllFilters()">Eliminar
+                Filtros</button>
+            <button class="btn btn-ver ms-2" data-bs-dismiss="offcanvas">Ver {{filteredProducts.length}}
+                Articulos</button>
+        </div>
+
+        <br><br>
     </div>
 </div>

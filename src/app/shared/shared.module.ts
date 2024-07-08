@@ -11,6 +11,7 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { GaleProdComponent } from './gale-prod/gale-prod.component';
 import { TarProdDesComponent } from './tar-prod-des/tar-prod-des.component';
 import { TarGaleComponent } from './tar-gale/tar-gale.component';
+import { NgmaterialModule } from '../ngmaterial/ngmaterial.module';
 
 
 
@@ -39,7 +40,8 @@ import { TarGaleComponent } from './tar-gale/tar-gale.component';
     CommonModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    NgmaterialModule
   ]
 })
 export class SharedModule { }

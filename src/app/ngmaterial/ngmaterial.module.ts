@@ -15,11 +15,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
-import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAccordion, MatExpansionModule} from '@angular/material/expansion';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-
 
 
 @NgModule({
@@ -41,7 +40,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatExpansionModule,
     MatTabsModule,
     MatStepperModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    
   ]
 })
 export class NgmaterialModule { }

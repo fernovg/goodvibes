@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { categorias } from 'src/app/models/tienda.models';
+import { categorias, colecciones, colores, temas } from 'src/app/models/tienda.models';
 import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
 
@@ -12,6 +12,9 @@ import Swal from 'sweetalert2';
 export class RegistroprodComponent {
 
   categoria: categorias[] = [];
+  coleccion: colecciones[] = [];
+  tema: temas[] = [];
+  color: colores[] = [];
 
   request = {
     Nombre: "",
@@ -19,6 +22,9 @@ export class RegistroprodComponent {
     Precio: "",
     Stock: "",
     Cate: "",
+    Col: "",
+    Tema: "",
+    Color: "",
     Foto1: "",
     Foto2: "",
     Foto3: "",
@@ -30,8 +36,10 @@ export class RegistroprodComponent {
   ){}
 
   ngOnInit(): void {
-    this.verificarConexion();
     this.categorias();
+    this.colecciones();
+    this.temas();
+    this.colores();
   }
 
     //! FOTO
@@ -133,50 +141,6 @@ export class RegistroprodComponent {
 
     //! FIN FOTO
 
-    //* Uso sin conexion
-    verificarConexion() {
-      if (navigator.onLine) {
-        // Si hay conexión al cargar el componente, intentar enviar datos guardados
-        this.enviarDatosGuardados();
-      }
-    }
-  
-    guardarLocalmente() {
-      const datosSinConexion = {
-        Nombre: this.request.Nombre,
-        Descripcion: this.request.Descripcion,
-        Precio: this.request.Precio,
-        Stock: this.request.Stock,
-        Foto1: this.base,
-        Foto2: this.base2,
-        Foto3: this.base3
-      };
-  
-      // Almacenar datos localmente
-      localStorage.setItem('datosSinConexion', JSON.stringify(datosSinConexion));
-  
-      this.mostrarNotificacionPush('Datos guardados localmente', 'Los datos se guardarán cuando haya conexión a Internet.');
-    }
-  
-    enviarDatosGuardados() {
-      const datosSinConexionString = localStorage.getItem('datosSinConexion');
-  
-      if (datosSinConexionString) {
-        const datosSinConexion = JSON.parse(datosSinConexionString);
-  
-        this.tiendaService.regiProd(datosSinConexion).subscribe({
-          next: (registroP) => {
-            // Resto del código para manejar la respuesta
-            // ...
-            this.router.navigate(['/dashboard/productos']);
-            this.mostrarNotificacionPush('Nuevo producto registrado', '¡Se ha registrado un nuevo producto!');
-            // Eliminar datos guardados localmente después de enviarlos
-            localStorage.removeItem('datosSinConexion');
-          }
-        });
-      }
-    }
-
     //* Fin de Uso sin conexion
 
     categorias(){
@@ -185,12 +149,25 @@ export class RegistroprodComponent {
       })
     }
 
+    colecciones() {
+      this.tiendaService.getColecciones().subscribe(colecciones => {
+        this.coleccion = colecciones;
+      });
+    }
+  
+    temas() {
+      this.tiendaService.getTemas().subscribe(temas => {
+        this.tema = temas;
+      });
+    }
+  
+    colores() {
+      this.tiendaService.getColores().subscribe(colores => {
+        this.color = colores;
+      });
+    }
+
     guardar(){
-      if (!navigator.onLine) {
-        // No hay conexión a Internet, guardar datos localmente
-        this.guardarLocalmente();
-        return;
-      }
       this.request.Foto1=this.base;
       this.request.Foto2=this.base2;
       this.request.Foto3=this.base3;
@@ -223,7 +200,6 @@ export class RegistroprodComponent {
             });
             return
           } 
-          this.mostrarNotificacionPush('Nuevo producto registrado', '¡Se ha registrado un nuevo producto!');
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -257,19 +233,4 @@ export class RegistroprodComponent {
         timer: 1500
       });
     }
-  
-    mostrarNotificacionPush(titulo: string, mensaje: string) {
-      // Verificar si el navegador admite notificaciones
-      if ('Notification' in window) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === 'granted') {
-            // Crear y mostrar la notificación
-            var notificacion = new Notification(titulo, {
-              body: mensaje
-            });
-          }
-        });
-      }
-    }
-
 }

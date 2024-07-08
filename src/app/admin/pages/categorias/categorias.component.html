@@ -1,0 +1,47 @@
+<app-sidebar></app-sidebar>
+<br>
+
+<div class="container my-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+            <li class="breadcrumb-item">
+                <a class="link-body-emphasis" href="dashboard/inicio">
+                    <i class="fa-solid fa-house"></i>
+                    <span class="visually-hidden">Inicio</span>
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Categorias
+            </li>
+        </ol>
+    </nav>
+
+    <a class="btn btn-dropdown" (click)="opendialog()">Nueva Categoria</a>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Accion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let cat of categoria">
+                <th scope="row">{{ cat.id }}</th>
+                <td>{{ cat.Nombre }}</td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btnbg text-black" (click)="openDialogEdit(cat)"><i
+                                class="fa-solid fa-file-pen"></i></button>
+                        <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(cat)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

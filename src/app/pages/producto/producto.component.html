@@ -35,20 +35,36 @@
             <h2>{{producto?.Nombre}}</h2>
             <p>{{producto?.precio | currency }}</p>
             <p>Disponibilidad: {{producto?.stock}}</p>
+            <p>Categoria: {{producto?.categoria}}</p>
         </div>
       </div>
       <div class="row mt-5">
           <div class="col">
               <h3>Detalles del Producto</h3>
               <p>{{producto?.descripcion}}</p>
+              <div>
+                <div class="row">
+                  <div class="col">
+                    Coleccion: {{producto?.coleccion}}
+                  </div>
+                  <div class="col">
+                    Tema: {{producto?.tema}}
+                  </div>
+                  <div class="col">
+                    Color: {{producto?.color}}
+                  </div>
+                </div>
+              </div>
           </div>
-
-          <button type="button" class="btn btnbg text-black" (click)="irAWatsapp()">
-            Para más información / comprar
-            <i class="bi fa-brands fa-whatsapp" width="100" height="100"></i>
-          </button>
           
       </div>
+
+      <br>
+
+      <button type="button" class="btn btnbg text-black" (click)="irAWatsapp()">
+        Para más información / comprar
+        <i class="bi fa-brands fa-whatsapp" width="100" height="100"></i>
+      </button>
       
     </div>
   </div>

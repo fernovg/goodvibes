@@ -3,8 +3,22 @@
 html, body { height: 100%; }
 body{ margin: 0; font-family: 'Josefin Sans', sans-serif; }
 
+:root{
+    --50: #faf7f2;
+    --100: #f3eee1;
+    --200: #e6dbc2;
+    --goodvibes: #D8C7A2;
+    --400: #c4a673;
+    --500: #b79058;
+    --600: #aa7c4c;
+    --700: #8d6441;
+    --800: #735239;
+    --900: #5d4431;
+    --950: #322318;
+}
+
 .bgpri{
-    background-color: #d8c7a2;
+    background-color: var(--goodvibes);
 }
 
 .bgsec{

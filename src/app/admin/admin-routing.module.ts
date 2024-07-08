@@ -10,6 +10,10 @@ import { GaleriaComponent } from './pages/galeria/galeria.component';
 import { NuevapubliComponent } from './pages/galeria/nuevapubli.component';
 import { VerpubliComponent } from './pages/galeria/verpubli.component';
 import { EditarpubliComponent } from './pages/galeria/editarpubli.component';
+import { ColeccionesComponent } from './pages/colecciones/colecciones.component';
+import { CategoriasComponent } from './pages/categorias/categorias.component';
+import { TemasComponent } from './pages/temas/temas.component';
+import { ColoresComponent } from './pages/colores/colores.component';
 
 const routes: Routes = [
   {
@@ -53,6 +57,22 @@ const routes: Routes = [
         path: 'editarpublicacion/:Id',
         canActivate: [ AuthGuard ],
         component: EditarpubliComponent  
+      },{
+        path: 'categorias',
+        canActivate: [ AuthGuard ],
+        component: CategoriasComponent 
+      },{
+        path: 'colecciones',
+        canActivate: [ AuthGuard ],
+        component: ColeccionesComponent 
+      },{
+        path: 'temas',
+        canActivate: [ AuthGuard ],
+        component: TemasComponent 
+      },{
+        path: 'colores',
+        canActivate: [ AuthGuard ],
+        component: ColoresComponent 
       },{
         path: '',
         redirectTo: 'inicio',

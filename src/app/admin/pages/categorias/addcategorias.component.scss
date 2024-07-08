@@ -1,0 +1,29 @@
+.btn {
+    &.warn {
+        background-color:  var(--600);
+        color: var(--50);
+    }
+
+    // .warn:hover {
+    //     background-color: var(--950);
+    //     color: white;
+    //     box-shadow: black;
+    // }
+
+    &.sec {
+        background-color: var(--950);
+        color: white;
+    }
+
+    // &:hover.sec:not(:disabled) {
+    //     box-shadow: black;
+    // }
+}
+
+::ng-deep {
+    .mat-mdc-dialog-container {
+        --mdc-dialog-container-color: var(--100) !important;
+        --mdc-dialog-subhead-color: black;
+        --mdc-dialog-supporting-text-color: black;
+    }
+}
