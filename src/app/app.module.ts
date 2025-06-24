@@ -16,6 +16,12 @@ import { NgmaterialModule } from './ngmaterial/ngmaterial.module';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { enviroment } from '../environments/environment.prod';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire/compat';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +45,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    AngularFireModule.initializeApp(enviroment.firebase),
+    // AngularFirestoreModule,
+    provideFirebaseApp(() => initializeApp(enviroment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]

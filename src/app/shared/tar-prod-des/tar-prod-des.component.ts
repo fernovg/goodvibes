@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { prodTienda } from 'src/app/models/tienda.models';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
@@ -11,6 +12,8 @@ export class TarProdDesComponent {
 
   prodTienda: prodTienda[] = [];
 
+  private fireService = inject(FirestoreService);
+
   constructor(
     private tiendaService: TiendaService,
   ){}
@@ -20,8 +23,11 @@ export class TarProdDesComponent {
   }
 
   getProd(){
-    this.tiendaService.getProdDes().subscribe( prodTienda => {
+    const path = `productos`;
+
+    this.fireService.traerColeccion<prodTienda>(path).subscribe( prodTienda => {
       this.prodTienda = prodTienda;
+      console.log(prodTienda);
     })
   }
 

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/autenticacion.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-inicio',
@@ -9,17 +10,27 @@ import { AuthenticationService } from 'src/app/services/autenticacion.service';
 })
 export class InicioComponent {
 
-  constructor(
-    private auth: AuthenticationService,
-    private router: Router
-  ){}
+  private authfire = inject(AuthService)
+  private router = inject(Router)
+
+  user: string | undefined;
+  constructor(){}
 
 
-  ngOnInit() {    
-    const currentUser = this.auth.currentUserValue;
-    
-    if (currentUser && currentUser.tipo === "admin") {
-      this.router.navigate(['/dashboard']);
+  ngOnInit() {
+    this.isLoggedIn();
+  }
+
+  async isLoggedIn() {
+    if (this.authfire.isAuthenticated()) {
+      // this.router.navigate(['/inicio'])
+      const userCredential = await this.authfire.getUserData()
+      this.user = userCredential.tipouser;
+      if (this.user == "user") {
+        this.router.navigate(['/inicio'])
+      } else if (this.user == "admin") {
+        this.router.navigate(['/dashboard'])
+      }
     }
   }
   
