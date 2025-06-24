@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 import { producto } from 'src/app/models/tienda.models';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { TiendaService } from 'src/app/services/tienda.service';
 export class ProductoComponent {
 
   producto! : producto | undefined;
+  private fireService = inject(FirestoreService);
 
   constructor(
     private activatedRoute: ActivatedRoute,

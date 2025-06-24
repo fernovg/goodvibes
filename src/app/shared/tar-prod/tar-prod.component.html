@@ -12,7 +12,7 @@
                         <input class="form-check-input" type="checkbox" name="ordenar" [checked]="order === 'precioAsc'"
                             (change)="setOrder('precioAsc')">
                         <label class="form-check-label" (click)="setOrder('precioAsc')">
-                            Precio: Bajo a Alto
+                            Precio: Menor a Mayor
                         </label>
                     </div>
                 </li>
@@ -21,7 +21,7 @@
                         <input class="form-check-input" type="checkbox" name="ordenar"
                             [checked]="order === 'precioDesc'" (change)="setOrder('precioDesc')">
                         <label class="form-check-label" (click)="setOrder('precioDesc')">
-                            Precio: Alto a Bajo
+                            Precio: Mayor a Menor
                         </label>
                     </div>
                 </li>
@@ -39,7 +39,7 @@
 
     <!-- cartas productos -->
     <div class="grid">
-        <div class="card mt-3" [routerLink]="['/catalogo/producto', producto.id]"
+        <div class="card mt-3" [routerLink]="['/catalogo/producto', producto.uid]"
             *ngFor="let producto of filteredProducts">
             <div class="text-center">
                 <br>
@@ -78,9 +78,9 @@
                     </mat-expansion-panel-header>
                     <!-- Categoría -->
                     <button *ngFor="let cat of categoria" class="btn btn-filter"
-                        [class.btn-filter-off]="!selectedCategoria.has(cat.Nombre)"
-                        [class.btn-filter-on]="selectedCategoria.has(cat.Nombre)"
-                        (click)="toggleFilter('categoria', cat.Nombre)">
+                        [class.btn-filter-off]="!selectedCategoria.has(cat.uid)"
+                        [class.btn-filter-on]="selectedCategoria.has(cat.uid)"
+                        (click)="toggleFilter('categoria', cat.uid)">
                         {{ cat.Nombre }}
                     </button>
                 </mat-expansion-panel>
@@ -95,9 +95,9 @@
                     </mat-expansion-panel-header>
                     <!-- Colección -->
                     <button *ngFor="let col of coleccion" class="btn btn-filter"
-                        [class.btn-filter-off]="!selectedColeccion.has(col.coleccion)"
-                        [class.btn-filter-on]="selectedColeccion.has(col.coleccion)"
-                        (click)="toggleFilter('coleccion', col.coleccion)">
+                        [class.btn-filter-off]="!selectedColeccion.has(col.uid)"
+                        [class.btn-filter-on]="selectedColeccion.has(col.uid)"
+                        (click)="toggleFilter('coleccion', col.uid)">
                         {{ col.coleccion }}
                     </button>
                 </mat-expansion-panel>
@@ -112,8 +112,8 @@
                     </mat-expansion-panel-header>
                     <!-- Tema -->
                     <button *ngFor="let tem of tema" class="btn btn-filter"
-                        [class.btn-filter-off]="!selectedTema.has(tem.tema)"
-                        [class.btn-filter-on]="selectedTema.has(tem.tema)" (click)="toggleFilter('tema', tem.tema)">
+                        [class.btn-filter-off]="!selectedTema.has(tem.uid)"
+                        [class.btn-filter-on]="selectedTema.has(tem.uid)" (click)="toggleFilter('tema', tem.uid)">
                         {{ tem.tema }}
                     </button>
                 </mat-expansion-panel>
@@ -128,8 +128,8 @@
                     </mat-expansion-panel-header>
                     <!-- Color -->
                     <button *ngFor="let col of color" class="btn btn-filter"
-                        [class.btn-filter-off]="!selectedColor.has(col.color)"
-                        [class.btn-filter-on]="selectedColor.has(col.color)" (click)="toggleFilter('color', col.color)">
+                        [class.btn-filter-off]="!selectedColor.has(col.uid)"
+                        [class.btn-filter-on]="selectedColor.has(col.uid)" (click)="toggleFilter('color', col.uid)">
                         {{ col.color }}
                     </button>
                 </mat-expansion-panel>

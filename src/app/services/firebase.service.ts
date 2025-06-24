@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { deleteDoc, orderBy, query, updateDoc, where } from '@firebase/firestore';
+import { deleteDoc, getDoc, orderBy, query, QueryConstraint, updateDoc, where } from '@firebase/firestore';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid'; //es una extension que crea id
 
@@ -19,6 +19,23 @@ export class FirestoreService {
     traerColeccion<tipo>(path: string) {
         const refcollection = collection(this.firestore, path);
         return collectionData(refcollection) as Observable<tipo[]>
+    }
+
+    traerColeccionW<tipo>(path: string, q?: QueryConstraint[]) {
+        const refcollection = collection(this.firestore, path);
+        const queryRef = q ? query(refcollection, ...q) : refcollection;
+        return collectionData(queryRef, { idField: 'id' }) as Observable<tipo[]>;
+    }
+
+    traerDocumentoPorId<tipo>(path: string, id: string): Promise<tipo | null> {
+        const refDoc = doc(this.firestore, `${path}/${id}`);
+        return getDoc(refDoc).then(snapshot => {
+            if (snapshot.exists()) {
+                return snapshot.data() as tipo;
+            } else {
+                return null;
+            }
+        });
     }
 
     //* funcion generica para el registro en la base de datos
