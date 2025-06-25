@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { editarP, prodTienda } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,28 +11,24 @@ import Swal from 'sweetalert2';
 export class TarDProdComponent {
 
   prodTienda: prodTienda[] = [];
-
+  private fireService = inject(FirestoreService);
   productoSeleccionado: any;
 
-  constructor(
-    private tiendaService: TiendaService,
-  ){}
+  constructor() { }
 
   ngOnInit(): void {
     this.getProd();
   }
 
-  getProd(){
-    this.tiendaService.getProd().subscribe( prodTienda => {
+  getProd() {
+    const path = 'productos'
+    this.fireService.traerColeccion<prodTienda>(path).subscribe(prodTienda => {
       this.prodTienda = prodTienda;
     })
   }
 
-  request = {
-    Id: ""
-  }
-
   borrar(producto: any) {
+    const path = 'productos'
     Swal.fire({
       position: "top-end",
       title: "Estas seguro que quieres borrar " + producto.Nombre + "?",
@@ -40,24 +36,8 @@ export class TarDProdComponent {
       confirmButtonText: "Borrar",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.request.Id=producto.id;
-        this.tiendaService.borrarProd(this.request).subscribe({
-          next:(borrarP)=>{
-            if(!borrarP.result){
-              Swal.fire(borrarP.message, "", "warning");
-            }
-            Swal.fire({
-              position: "top-end",
-              title: borrarP.message,
-              icon: "success",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                window.location.reload();
-              }
-            });      
-          }
-        })
+        this.fireService.borrarDocID(path, producto.uid);
+        this.mostrarMensajeVal('Elimando correctamente')
       }
     });
   }
@@ -65,38 +45,44 @@ export class TarDProdComponent {
 
   //* Editar el stock del producto
   requestStock = {
-    Id: "",
-    Stock: ""
+    Id: '',
+    stock: ""
   }
 
   setProductoSeleccionado(producto: any): void {
     this.productoSeleccionado = { ...producto }; // Crea una copia para evitar mutaciones directas
-    this.requestStock.Id = this.productoSeleccionado?.id;
+    this.requestStock.Id = this.productoSeleccionado?.uid;
   }
 
-  guardarStock(){
-    this.tiendaService.editarStock(this.requestStock).subscribe({
-      next:(editStock)=>{
-        if(!editStock.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: editStock.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: editStock.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.getProd();
-      }
-    })    
+  guardarStock() {
+    const path = 'productos';
+    const data = {
+      stock: this.requestStock.stock
+    };
+    console.log(this.requestStock)
+    this.fireService.actualizarDocId(data, path, this.requestStock.Id)
+    .then(() => this.mostrarMensajeVal('Stock Actualizado'))
+    .catch(err => this.mostrarMensajeError('Error al actualizar stock'));
   }
 
+  //*Alertas
+  mostrarMensajeError(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  mostrarMensajeVal(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 }

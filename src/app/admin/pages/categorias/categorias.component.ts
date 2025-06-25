@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { categorias } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
 import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { AddcategoriasComponent } from './addcategorias.component';
@@ -17,12 +16,7 @@ export class CategoriasComponent {
   private fireService = inject(FirestoreService);
   categoria: categorias[] = [];
 
-  request = {
-    Id: ''
-  }
-
   private dialog = inject(MatDialog);
-  private tiendaService = inject(TiendaService);
 
   ngOnInit(): void {
     this.categorias();
@@ -45,7 +39,7 @@ export class CategoriasComponent {
 
   openDialogEdit(cat: any) {
     const dialogRef = this.dialog.open(EditcategoriaComponent, {
-      data: { id: cat.id }
+      data: { uid: cat.uid }
     });
     dialogRef.afterClosed().subscribe(() => {
       this.categorias();
@@ -53,6 +47,7 @@ export class CategoriasComponent {
   }
 
   borrar(cat: any) {
+    const path = 'categoria';
     Swal.fire({
       position: "top-end",
       title: "Estas seguro que quieres borrar " + cat.Nombre + "?",
@@ -60,26 +55,31 @@ export class CategoriasComponent {
       confirmButtonText: "Borrar",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.request.Id=cat.id;
-        this.tiendaService.borrarCategoria(this.request).subscribe({
-          next:(registro)=>{
-            if(!registro.result){
-              Swal.fire(registro.message, "", "warning");
-            }
-            Swal.fire({
-              position: "top-end",
-              title: registro.message,
-              icon: "success",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.categorias();
-              }
-            });      
-          }
-        })
+        this.fireService.borrarDocID(path, cat.uid);
+        this.mostrarMensajeVal('Elimando correctamente')
       }
     });
   }
+
+      //*Alertas
+      mostrarMensajeError(mensaje: string) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: mensaje,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    
+      mostrarMensajeVal(mensaje: string) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: mensaje,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
 
 }

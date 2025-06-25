@@ -24,7 +24,7 @@ export class ColeccionesComponent {
 
   colecciones() {
     const path = 'coleccion';
-    this.fireService.traerColeccion<colecciones>(path).subscribe( colecciones => {
+    this.fireService.traerColeccion<colecciones>(path).subscribe(colecciones => {
       this.coleccion = colecciones;
     })
   }
@@ -32,7 +32,7 @@ export class ColeccionesComponent {
   opendialog() {
     const dialogRef = this.dialog.open(AddcoleccionComponent);
     dialogRef.afterClosed().subscribe(() => {
-      this.colecciones();
+      // this.colecciones();
     });
   }
 
@@ -41,7 +41,7 @@ export class ColeccionesComponent {
       data: { uid: cat.uid }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.colecciones();
+      // this.colecciones();
     });
   }
 
@@ -61,25 +61,25 @@ export class ColeccionesComponent {
   }
 
 
-    //*Alertas
-    mostrarMensajeError(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  
-    mostrarMensajeVal(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
+  //*Alertas
+  mostrarMensajeError(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  mostrarMensajeVal(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
 }

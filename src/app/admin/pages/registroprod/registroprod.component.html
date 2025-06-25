@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <label for="descripcion">Descripción:</label>
                     <textarea class="form-control" name="Descripcion" rows="3"
-                        placeholder="Ingrese una descripción del producto" [(ngModel)]="request.Descripcion"
+                        placeholder="Ingrese una descripción del producto" [(ngModel)]="request.descripcion"
                         required></textarea>
                 </div>
 
@@ -48,16 +48,16 @@
                     <label for="precio">Precio:</label>
                     <div class="input-group">
                         <input type="number" class="form-control" name="Precio" placeholder="Ingrese el precio"
-                            [(ngModel)]="request.Precio" step="0.01" required>
+                            [(ngModel)]="request.precio" step="0.01" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="precio">Categoria:</label>
                     <div class="input-group">
-                        <select [(ngModel)]="request.Cate" class="form-select" name="Cate">
+                        <select [(ngModel)]="request.uidcategoria" class="form-select" name="Cate">
                             <option value="" selected disabled>Selecciona una categoria</option>
-                            <option *ngFor="let cate of categoria" value="{{cate.id}}">{{cate.Nombre}}</option>
+                            <option *ngFor="let cate of categoria" value="{{cate.uid}}">{{cate.Nombre}}</option>
                         </select>
                     </div>
                 </div>
@@ -65,9 +65,9 @@
                 <div class="form-group">
                     <label for="precio">Coleccion:</label>
                     <div class="input-group">
-                        <select [(ngModel)]="request.Col" class="form-select" name="Col">
+                        <select [(ngModel)]="request.uidcoleccion" class="form-select" name="Col">
                             <option value="" selected disabled>Selecciona una coleccion</option>
-                            <option *ngFor="let col of coleccion" value="{{col.id}}">{{col.coleccion}}</option>
+                            <option *ngFor="let col of coleccion" value="{{col.uid}}">{{col.coleccion}}</option>
                         </select>
                     </div>
                 </div>
@@ -75,9 +75,9 @@
                 <div class="form-group">
                     <label for="precio">Tema:</label>
                     <div class="input-group">
-                        <select [(ngModel)]="request.Tema" class="form-select" name="Tema">
+                        <select [(ngModel)]="request.uidtema" class="form-select" name="Tema">
                             <option value="" selected disabled>Selecciona un tema</option>
-                            <option *ngFor="let tem of tema" value="{{tem.id}}">{{tem.tema}}</option>
+                            <option *ngFor="let tem of tema" value="{{tem.uid}}">{{tem.tema}}</option>
                         </select>
                     </div>
                 </div>
@@ -85,9 +85,9 @@
                 <div class="form-group">
                     <label for="precio">Color:</label>
                     <div class="input-group">
-                        <select [(ngModel)]="request.Color" class="form-select" name="Color">
+                        <select [(ngModel)]="request.uidcolor" class="form-select" name="Color">
                             <option value="" selected disabled>Selecciona un color</option>
-                            <option *ngFor="let colo of color" value="{{colo.id}}">{{colo.color}}</option>
+                            <option *ngFor="let colo of color" value="{{colo.uid}}">{{colo.color}}</option>
                         </select>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="form-group">
                     <label for="stock">Stock:</label>
                     <input type="number" class="form-control" name="Stock" placeholder="Ingrese la cantidad en stock"
-                        [(ngModel)]="request.Stock" required>
+                        [(ngModel)]="request.stock" required>
                 </div>
 
                 <div class="mb-3">

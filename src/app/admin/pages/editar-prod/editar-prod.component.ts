@@ -1,7 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { categorias, colecciones, colores, producto, temas } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class EditarProdComponent {
 
+  private fireService = inject(FirestoreService);
   categoria: categorias[] = [];
   coleccion: colecciones[] = [];
   tema: temas[] = [];
@@ -24,17 +25,16 @@ export class EditarProdComponent {
     Descripcion: "",
     Precio: "",
     Stock: "",
-    Cate: "",
-    Col: "",
-    Tema: "",
-    Color: "",
-    Foto1: "",
-    Foto2: "",
-    Foto3: "",
+    uidcategoria: "",
+    uidcoleccion: "",
+    uidtema: "",
+    uidcolor: "",
+    foto1: "",
+    foto2: "",
+    foto3: "",
   }
 
   constructor(
-    private tiendaService: TiendaService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
@@ -148,62 +148,72 @@ export class EditarProdComponent {
   //* Fin de Uso sin conexion
 
   categorias() {
-    this.tiendaService.getCategoria().subscribe(categorias => {
+    const path = 'categoria';
+    this.fireService.traerColeccion<categorias>(path).subscribe(categorias => {
       this.categoria = categorias;
     })
   }
 
   colecciones() {
-    this.tiendaService.getColecciones().subscribe(colecciones => {
+    const path = 'coleccion';
+    this.fireService.traerColeccion<colecciones>(path).subscribe(colecciones => {
       this.coleccion = colecciones;
     });
   }
 
   temas() {
-    this.tiendaService.getTemas().subscribe(temas => {
+    const path = 'tema';
+    this.fireService.traerColeccion<temas>(path).subscribe(temas => {
       this.tema = temas;
     });
   }
 
   colores() {
-    this.tiendaService.getColores().subscribe(colores => {
+    const path = 'color';
+    this.fireService.traerColeccion<colores>(path).subscribe(colores => {
       this.color = colores;
     });
   }
 
   verProducto(): void {
+    const path = 'productos';
     this.activatedRoute.params.subscribe(params => {
       const id = params['Id'];
-      this.tiendaService.getProducto({ Id: id }).subscribe(
+      this.fireService.traerDocumentoPorId<producto>(path, id).then(
         producto => {
+          if (!producto) {
+            console.error('Producto no encontrado');
+            return;
+          }
           this.producto = producto;
-          this.request.Id = producto.id;
+          this.request.Id = producto.uid;
           this.request.Nombre = producto.Nombre;
           this.request.Descripcion = producto.descripcion;
           this.request.Precio = producto.precio.toString();
-          this.request.Cate = producto.idcategoria;
-          this.request.Col = producto.idcoleccion;
-          this.request.Tema = producto.idtema;
-          this.request.Color = producto.idcolor;
+          this.request.uidcategoria = producto.uidcategoria;
+          this.request.uidcoleccion = producto.uidcoleccion;
+          this.request.uidtema = producto.uidtema;
+          this.request.uidcolor = producto.uidcolor;
           this.request.Stock = producto.stock.toString();
-          this.request.Foto1 = producto.foto1;
-          this.request.Foto2 = producto.foto2;
-          this.request.Foto3 = producto.foto3;
+          this.request.foto1 = producto.foto1;
+          this.request.foto2 = producto.foto2;
+          this.request.foto3 = producto.foto3;
         }
       );
     });
   }
 
   guardar() {
+    const path = 'productos'
     // this.producto!.id = this.request.Id
     if (this.base) {  // Verifica si this.base está lleno
-      this.request.Foto1 = this.base;
+      this.request.foto1 = this.base;
     }
     if (this.base2) {  // Verifica si this.base está lleno
-      this.request.Foto2 = this.base2;
+      this.request.foto2 = this.base2;
     }
     if (this.base3) {  // Verifica si this.base está lleno
-      this.request.Foto3 = this.base3;
+      this.request.foto3 = this.base3;
     }
     if (this.request.Nombre == "") {
       this.mostrarMensajeError("Falta El Nombre");
@@ -221,29 +231,14 @@ export class EditarProdComponent {
       this.mostrarMensajeError("Falta El Stock");
       return
     }
-    this.tiendaService.editarProd(this.request).subscribe({
-      next: (editarP) => {
-        if (!editarP.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: editarP.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: editarP.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.router.navigate(['/dashboard/productos'])
-      }
-    })
-    console.log(this.request);
+    const { Id, ...data  } = this.request;
+    // ✅ Eliminar campos con undefined
+    const dataToUpdate = Object.fromEntries(
+      Object.entries(data).filter(([_, v]) => v !== undefined)
+    );
+    this.fireService.actualizarDocId(dataToUpdate, path, Id)
+    .then(() => {this.mostrarMensajeVal('Producto Actualizado'); this.router.navigate(['/dashboard/productos'])})
+    .catch(error => this.mostrarMensajeError('Error Al Guardar Los Datos'))
   }
 
 

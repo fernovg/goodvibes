@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { temas } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
 import { AddtemasComponent } from './addtemas.component';
 import { EdittemasComponent } from './edittemas.component';
 import Swal from 'sweetalert2';
+import { FirestoreService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-temas',
@@ -13,21 +13,17 @@ import Swal from 'sweetalert2';
 })
 export class TemasComponent {
 
-  tema: temas[] = [];
-
-  request = {
-    Id: ''
-  }
-
+  private fireService = inject(FirestoreService);
   private dialog = inject(MatDialog);
-  private tiendaService = inject(TiendaService);
+  tema: temas[] = [];
 
   ngOnInit(): void {
     this.temas();
   }
 
   temas() {
-    this.tiendaService.getTemas().subscribe(temas => {
+    const path = 'tema'
+    this.fireService.traerColeccion<temas>(path).subscribe(temas => {
       this.tema = temas;
     });
   }
@@ -35,48 +31,52 @@ export class TemasComponent {
   opendialog() {
     const dialogRef = this.dialog.open(AddtemasComponent);
     dialogRef.afterClosed().subscribe(() => {
-      this.temas();
+      // this.temas();
     });
   }
 
   openDialogEdit(tema: any) {
     const dialogRef = this.dialog.open(EdittemasComponent, {
-      data: { id: tema.id }
+      data: { uid: tema.uid }
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.temas();
+      // this.temas();
     });
   }
 
-
   borrar(tema: any) {
+    const path = 'tema'
     Swal.fire({
       position: "top-end",
-      title: "Estas seguro que quieres borrar " + tema.Nombre + "?",
+      title: "Estas seguro que quieres borrar " + tema.tema + "?",
       showCancelButton: true,
       confirmButtonText: "Borrar",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.request.Id = tema.id;
-        this.tiendaService.borrarTema(this.request).subscribe({
-          next: (registro) => {
-            if (!registro.result) {
-              Swal.fire(registro.message, "", "warning");
-            }
-            Swal.fire({
-              position: "top-end",
-              title: registro.message,
-              icon: "success",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.temas();
-              }
-            });
-          }
-        })
+        this.fireService.borrarDocID(path, tema.uid);
+        this.mostrarMensajeVal('Elimando correctamente')
       }
     });
   }
 
+  //*Alertas
+  mostrarMensajeError(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  mostrarMensajeVal(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 }

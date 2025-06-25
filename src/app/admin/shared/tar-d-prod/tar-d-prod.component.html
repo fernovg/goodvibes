@@ -15,10 +15,10 @@
                 </div>
                 <div class="container-card-footer align-items-center">
                     <div class="btn-group">
-                        <a [routerLink]="['../verproducto', producto.id]" class="text-decoration-none">
+                        <a [routerLink]="['../verproducto', producto.uid]" class="text-decoration-none">
                             <button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button>
                         </a>
-                        <a [routerLink]="['../editar_producto', producto.id]" class="text-decoration-none">
+                        <a [routerLink]="['../editar_producto', producto.uid]" class="text-decoration-none">
                             <button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button>
                         </a>
                         <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(producto)">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="stock">Nuevo Stock:</label>
-                    <input type="number" class="form-control" [(ngModel)]="requestStock.Stock" name="Stock" placeholder="{{productoSeleccionado?.stock}}" required>
+                    <input type="number" class="form-control" [(ngModel)]="requestStock.stock" name="Stock" placeholder="{{productoSeleccionado?.stock}}" required>
                 </div>
             </div>
             <div class="modal-footer">

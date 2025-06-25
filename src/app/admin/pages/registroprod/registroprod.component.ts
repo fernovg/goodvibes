@@ -1,7 +1,7 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { categorias, colecciones, colores, temas } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,29 +11,30 @@ import Swal from 'sweetalert2';
 })
 export class RegistroprodComponent {
 
+  private fireService = inject(FirestoreService);
   categoria: categorias[] = [];
   coleccion: colecciones[] = [];
   tema: temas[] = [];
   color: colores[] = [];
 
   request = {
+    uid: this.fireService.crearIdDoc(),
     Nombre: "",
-    Descripcion: "",
-    Precio: "",
-    Stock: "",
-    Cate: "",
-    Col: "",
-    Tema: "",
-    Color: "",
-    Foto1: "",
-    Foto2: "",
-    Foto3: "",
+    descripcion: "",
+    precio: "",
+    stock: "",
+    uidcategoria: "",
+    uidcoleccion: "",
+    uidtema: "",
+    uidcolor: "",
+    foto1: "",
+    foto2: "",
+    foto3: "",
   }
 
   constructor(
-    private tiendaService: TiendaService,
     private router: Router
-  ){}
+  ) { }
 
   ngOnInit(): void {
     this.categorias();
@@ -42,195 +43,180 @@ export class RegistroprodComponent {
     this.colores();
   }
 
-    //! FOTO
+  //! FOTO
 
-    @ViewChild('filepicker', { static: false }) uploader!: ElementRef;
+  @ViewChild('filepicker', { static: false }) uploader!: ElementRef;
 
-    base: string = "";
-    base2: string = "";
-    base3: string = "";
-  
-    addFile() {
-      this.uploader.nativeElement.click();
-    }
-  
-    async onFileSelected($event: any) {
-      const selected = $event.target.files[0];
-      var reader = new FileReader();
-  
-      if (selected.size < 2000000) {
-        var ext = selected.type.split('/').pop();
-        if (ext == "jpg" || ext == "jpeg" || ext == "png") {
-          reader.readAsDataURL(selected);
-          reader.onload = (_event) => {
-            if (reader.result) {
-              this.base = reader.result.toString();
-              // Additional logic if needed
-            } else {
-              // Handle the case where reader.result is null
-              this.mostrarMensajeError("Esta vacío");
-            }
-          };
-        } else {
-          // Handle incorrect image format
-          this.mostrarMensajeError("Formato de imagen incorrecto");
-  
-        }
+  base: string = "";
+  base2: string = "";
+  base3: string = "";
+
+  addFile() {
+    this.uploader.nativeElement.click();
+  }
+
+  async onFileSelected($event: any) {
+    const selected = $event.target.files[0];
+    var reader = new FileReader();
+
+    if (selected.size < 2000000) {
+      var ext = selected.type.split('/').pop();
+      if (ext == "jpg" || ext == "jpeg" || ext == "png") {
+        reader.readAsDataURL(selected);
+        reader.onload = (_event) => {
+          if (reader.result) {
+            this.base = reader.result.toString();
+            // Additional logic if needed
+          } else {
+            // Handle the case where reader.result is null
+            this.mostrarMensajeError("Esta vacío");
+          }
+        };
       } else {
-        // Handle image size limit exceeded
-        this.mostrarMensajeError("Pesa mucho");
+        // Handle incorrect image format
+        this.mostrarMensajeError("Formato de imagen incorrecto");
+
       }
+    } else {
+      // Handle image size limit exceeded
+      this.mostrarMensajeError("Pesa mucho");
     }
-  
-    async onFileSelected2($event: any) {
-      const selected = $event.target.files[0];
-      var reader = new FileReader();
-  
-      if (selected.size < 2000000) {
-        var ext = selected.type.split('/').pop();
-        if (ext == "jpg" || ext == "jpeg" || ext == "png") {
-          reader.readAsDataURL(selected);
-          reader.onload = (_event) => {
-            if (reader.result) {
-              this.base2 = reader.result.toString();
-              // Additional logic if needed
-            } else {
-              // Handle the case where reader.result is null
-              this.mostrarMensajeError("Esta vacío");
-            }
-          };
-        } else {
-          // Handle incorrect image format
-          this.mostrarMensajeError("Formato de imagen incorrecto");
-  
-        }
+  }
+
+  async onFileSelected2($event: any) {
+    const selected = $event.target.files[0];
+    var reader = new FileReader();
+
+    if (selected.size < 2000000) {
+      var ext = selected.type.split('/').pop();
+      if (ext == "jpg" || ext == "jpeg" || ext == "png") {
+        reader.readAsDataURL(selected);
+        reader.onload = (_event) => {
+          if (reader.result) {
+            this.base2 = reader.result.toString();
+            // Additional logic if needed
+          } else {
+            // Handle the case where reader.result is null
+            this.mostrarMensajeError("Esta vacío");
+          }
+        };
       } else {
-        // Handle image size limit exceeded
-        this.mostrarMensajeError("Pesa mucho");
+        // Handle incorrect image format
+        this.mostrarMensajeError("Formato de imagen incorrecto");
+
       }
+    } else {
+      // Handle image size limit exceeded
+      this.mostrarMensajeError("Pesa mucho");
     }
-  
-    async onFileSelected3($event: any) {
-      const selected = $event.target.files[0];
-      var reader = new FileReader();
-  
-      if (selected.size < 2000000) {
-        var ext = selected.type.split('/').pop();
-        if (ext == "jpg" || ext == "jpeg" || ext == "png") {
-          reader.readAsDataURL(selected);
-          reader.onload = (_event) => {
-            if (reader.result) {
-              this.base3 = reader.result.toString();
-              // Additional logic if needed
-            } else {
-              // Handle the case where reader.result is null
-              this.mostrarMensajeError("Esta vacío");
-            }
-          };
-        } else {
-          // Handle incorrect image format
-          this.mostrarMensajeError("Formato de imagen incorrecto");
-  
-        }
+  }
+
+  async onFileSelected3($event: any) {
+    const selected = $event.target.files[0];
+    var reader = new FileReader();
+
+    if (selected.size < 2000000) {
+      var ext = selected.type.split('/').pop();
+      if (ext == "jpg" || ext == "jpeg" || ext == "png") {
+        reader.readAsDataURL(selected);
+        reader.onload = (_event) => {
+          if (reader.result) {
+            this.base3 = reader.result.toString();
+            // Additional logic if needed
+          } else {
+            // Handle the case where reader.result is null
+            this.mostrarMensajeError("Esta vacío");
+          }
+        };
       } else {
-        // Handle image size limit exceeded
-        this.mostrarMensajeError("Pesa mucho");
+        // Handle incorrect image format
+        this.mostrarMensajeError("Formato de imagen incorrecto");
+
       }
+    } else {
+      // Handle image size limit exceeded
+      this.mostrarMensajeError("Pesa mucho");
     }
+  }
+
+  //! FIN FOTO
+
+  //* Fin de Uso sin conexion
+
+  categorias() {
+    const path = 'categoria';
+    this.fireService.traerColeccion<categorias>(path).subscribe(categorias => {
+      this.categoria = categorias;
+    })
+  }
+
+  colecciones() {
+    const path = 'coleccion';
+    this.fireService.traerColeccion<colecciones>(path).subscribe(colecciones => {
+      this.coleccion = colecciones;
+    });
+  }
+
+  temas() {
+    const path = 'tema';
+    this.fireService.traerColeccion<temas>(path).subscribe(temas => {
+      this.tema = temas;
+    });
+  }
+
+  colores() {
+    const path = 'color';
+    this.fireService.traerColeccion<colores>(path).subscribe(colores => {
+      this.color = colores;
+    });
+  }
+
+  guardar() {
+    const path = 'productos';
+    this.request.foto1 = this.base;
+    this.request.foto2 = this.base2;
+    this.request.foto3 = this.base3;
+    console.log(this.request);
+    if (this.request.Nombre == "") {
+      this.mostrarMensajeError("Falta El Nombre");
+      return
+    }
+    if (this.request.descripcion == "") {
+      this.mostrarMensajeError("Falta La Descripcion");
+      return
+    }
+    if (this.request.precio == "") {
+      this.mostrarMensajeError("Falta El Precio");
+      return
+    }
+    if (this.request.stock == "") {
+      this.mostrarMensajeError("Falta El Stock");
+      return
+    }
+    this.fireService.crearDocumento(this.request, path, this.request.uid)
+    .then(() => {this.mostrarMensajeVal('Producto Registrado'); this.router.navigate(['/dashboard/productos'])})
+    .catch(error => this.mostrarMensajeError('Error Al Guardar Los Datos'))
+  }
 
 
-    //! FIN FOTO
+  //*Alertas
+  mostrarMensajeError(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
-    //* Fin de Uso sin conexion
-
-    categorias(){
-      this.tiendaService.getCategoria().subscribe( categorias => {
-        this.categoria = categorias;
-      })
-    }
-
-    colecciones() {
-      this.tiendaService.getColecciones().subscribe(colecciones => {
-        this.coleccion = colecciones;
-      });
-    }
-  
-    temas() {
-      this.tiendaService.getTemas().subscribe(temas => {
-        this.tema = temas;
-      });
-    }
-  
-    colores() {
-      this.tiendaService.getColores().subscribe(colores => {
-        this.color = colores;
-      });
-    }
-
-    guardar(){
-      this.request.Foto1=this.base;
-      this.request.Foto2=this.base2;
-      this.request.Foto3=this.base3;
-      console.log(this.request);
-      if (this.request.Nombre == "") {
-        this.mostrarMensajeError("Falta El Nombre");
-        return
-      }
-      if (this.request.Descripcion == "") {
-        this.mostrarMensajeError("Falta La Descripcion");
-        return
-      }
-      if (this.request.Precio == "") {
-        this.mostrarMensajeError("Falta El Precio");
-        return
-      }
-      if (this.request.Stock == "") {
-        this.mostrarMensajeError("Falta El Stock");
-        return
-      }
-      this.tiendaService.regiProd(this.request).subscribe({
-        next:(registroP)=> {
-          if (!registroP.result) {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: registroP.message,
-              showConfirmButton: false,
-              timer: 1500
-            });
-            return
-          } 
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: registroP.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.router.navigate(['/dashboard/productos'])
-        }
-      })
-    }
-
-
-    //*Alertas
-    mostrarMensajeError(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  
-    mostrarMensajeVal(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
+  mostrarMensajeVal(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 }

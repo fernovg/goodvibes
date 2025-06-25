@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,40 +10,23 @@ import Swal from 'sweetalert2';
 })
 export class AddcategoriasComponent {
 
+  private fireService = inject(FirestoreService);
   private dialogRef = inject(MatDialogRef<AddcategoriasComponent>);
-  private tiendaService = inject(TiendaService);
 
   request = {
+    uid: this.fireService.crearIdDoc(),
     Nombre: ""
   }
 
   guardar() {
+    const path = 'categoria'
     if (this.request.Nombre == "") {
       this.mostrarMensajeError("Falta El Nombre");
       return
     }
-    this.tiendaService.regiCategoria(this.request).subscribe({
-      next: (registro) => {
-        if (!registro.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: registro.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: registro.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.dialogRef.close();
-      }
-    })
+    this.fireService.crearDocumento(this.request, path, this.request.uid);
+    this.mostrarMensajeVal('Registro de Categoria Correcto');
+    this.dialogRef.close();
   }
 
 

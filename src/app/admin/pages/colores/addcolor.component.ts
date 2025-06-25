@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,41 +9,24 @@ import Swal from 'sweetalert2';
   styleUrls: ['./addcolor.component.scss']
 })
 export class AddcolorComponent {
+  private fireService = inject(FirestoreService);
 
   request = {
-    Nombre: ""
+    uid: this.fireService.crearIdDoc(),
+    color: "",
   }
 
   private dialogRef = inject(MatDialogRef<AddcolorComponent>);
-  private tiendaService = inject(TiendaService);
 
   guardar() {
-    if (this.request.Nombre == "") {
+    const path = 'color'
+    if (this.request.color == "") {
       this.mostrarMensajeError("Falta El Nombre");
       return
     }
-    this.tiendaService.regiColor(this.request).subscribe({
-      next: (registro) => {
-        if (!registro.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: registro.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: registro.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.dialogRef.close();
-      }
-    })
+    this.fireService.crearDocumento(this.request, path, this.request.uid);
+    this.mostrarMensajeVal('Registro de Color Correcto');
+    this.dialogRef.close();
   }
 
   //*Alertas

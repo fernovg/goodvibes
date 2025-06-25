@@ -19,13 +19,13 @@ export class EditcoleccionComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  async guardar() {
+  guardar() {
     const path = 'coleccion'
     if (this.request.coleccion == "") {
       this.mostrarMensajeError("Falta El Nombre");
       return;
     }
-    await this.fireService.actualizarDocId(this.request, path, this.request.uid);
+    this.fireService.actualizarDocId(this.request, path, this.request.uid);
     this.mostrarMensajeVal('Coleccion Editado Correctamente')
     this.dialogRef.close();
     // Aquí se debería llamar al servicio de tienda para actualizar la categoría

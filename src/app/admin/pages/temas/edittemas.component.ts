@@ -1,6 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,43 +11,30 @@ import Swal from 'sweetalert2';
 export class EdittemasComponent {
 
   private dialogRef = inject(MatDialogRef<EdittemasComponent>);
-  private tiendaService = inject(TiendaService);
-  
+  private fireService = inject(FirestoreService);
   request = {
-    Nombre: "",
-    Id: this.data.id 
+    tema: "",
+    uid: this.data.uid 
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
   guardar() {
-    if (this.request.Nombre == "") {
-      this.mostrarMensajeError("Falta El Nombre");
+    const path = 'tema';
+    if (this.request.tema == "") {
+      this.mostrarMensajeError("Falta El Nombre Del Tema");
       return;
     }
-    // Aquí se debería llamar al servicio de tienda para actualizar la categoría
-    this.tiendaService.editarTema(this.request).subscribe({
-      next: (registro) => {
-        if (!registro.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: registro.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return;
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: registro.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.dialogRef.close();
-      }
+    const { tema } = this.request;
+    this.fireService.actualizarDocId({ tema }, path, this.data.uid)
+    .then(() => {
+      this.mostrarMensajeVal('Tema Editado Correctamente');
+      this.dialogRef.close();
     })
+    .catch((error) => {
+      console.error('Error al editar tema:', error);
+      this.mostrarMensajeError('Error al editar el tema');
+    });
   }
 
   //*Alertas
