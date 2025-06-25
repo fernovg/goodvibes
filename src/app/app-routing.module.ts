@@ -19,7 +19,7 @@ const routes: Routes = [
     path: 'catalogo',
     component: CatalogoComponent,
   },{
-    path: 'catalogo/producto/:Id',
+    path: 'catalogo/producto/:uid',
     component: ProductoComponent,
   },{
     path: 'nosotros',

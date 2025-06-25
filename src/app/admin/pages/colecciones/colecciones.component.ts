@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { colecciones } from 'src/app/models/tienda.models';
-import { TiendaService } from 'src/app/services/tienda.service';
 import { AddcoleccionComponent } from './addcoleccion.component';
 import { EditcoleccionComponent } from './editcoleccion.component';
 import Swal from 'sweetalert2';
+import { FirestoreService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-colecciones',
@@ -15,21 +15,18 @@ export class ColeccionesComponent {
 
   coleccion: colecciones[] = [];
 
-  request = {
-    Id: ''
-  }
-
   private dialog = inject(MatDialog);
-  private tiendaService = inject(TiendaService);
+  private fireService = inject(FirestoreService);
 
   ngOnInit(): void {
     this.colecciones();
   }
 
   colecciones() {
-    this.tiendaService.getColecciones().subscribe(colecciones => {
+    const path = 'coleccion';
+    this.fireService.traerColeccion<colecciones>(path).subscribe( colecciones => {
       this.coleccion = colecciones;
-    });
+    })
   }
 
   opendialog() {
@@ -41,7 +38,7 @@ export class ColeccionesComponent {
 
   openDialogEdit(cat: any) {
     const dialogRef = this.dialog.open(EditcoleccionComponent, {
-      data: { id: cat.id }
+      data: { uid: cat.uid }
     });
     dialogRef.afterClosed().subscribe(() => {
       this.colecciones();
@@ -49,6 +46,7 @@ export class ColeccionesComponent {
   }
 
   borrar(col: any) {
+    const path = 'coleccion';
     Swal.fire({
       position: "top-end",
       title: "Estas seguro que quieres borrar " + col.Nombre + "?",
@@ -56,26 +54,32 @@ export class ColeccionesComponent {
       confirmButtonText: "Borrar",
     }).then((result) => {
       if (result.isConfirmed) {
-        this.request.Id = col.id;
-        this.tiendaService.borrarColeccion(this.request).subscribe({
-          next: (registro) => {
-            if (!registro.result) {
-              Swal.fire(registro.message, "", "warning");
-            }
-            Swal.fire({
-              position: "top-end",
-              title: registro.message,
-              icon: "success",
-              confirmButtonText: "Ok",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                this.colecciones();
-              }
-            });
-          }
-        })
+        this.fireService.borrarDocID(path, col.uid);
+        this.mostrarMensajeVal('Elimando correctamente')
       }
     });
   }
+
+
+    //*Alertas
+    mostrarMensajeError(mensaje: string) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: mensaje,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+  
+    mostrarMensajeVal(mensaje: string) {
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: mensaje,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
 
 }

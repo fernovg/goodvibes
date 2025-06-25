@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/autenticacion.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,30 +8,28 @@ import { AuthenticationService } from 'src/app/services/autenticacion.service';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
+  private authfire = inject(AuthService)
+  private router = inject(Router)
 
   nombre: string | undefined;
   usuario: string | undefined;
   foto: string | undefined;
 
-  constructor(
-    private auth: AuthenticationService,
-    private router: Router
-  ){}
+  constructor(){}
 
-  ngOnInit(){
-    this.nombre = this.auth.currentUserValue.nombre;
-    this.usuario = this.auth.currentUserValue.tipo;
-    this.foto = this.auth.currentUserValue.foto;
-    // console.log(this.nombre)
-    // console.log(this.usuario)
-    // console.log(this.auth.currentUserValue)
+  async ngOnInit(){
+    const userCredential = await this.authfire.getUserData()
+    this.nombre = userCredential.Nombre;
+    this.usuario = userCredential.tipouser;
+    this.foto = userCredential.foto;
   }
 
   cerrar() {
-    this.auth.logout();
+    this.authfire.logout();
+    // this.auth.logout();
     this.router.navigate(['/inicio'])
-    window.location.reload();
-    localStorage.removeItem('swalShown');
+    // window.location.reload();
+    // localStorage.removeItem('swalShown');
   }
   
 

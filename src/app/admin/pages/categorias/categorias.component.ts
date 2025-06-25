@@ -5,6 +5,7 @@ import {MatDialog} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { AddcategoriasComponent } from './addcategorias.component';
 import { EditcategoriaComponent } from './editcategoria.component';
+import { FirestoreService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-categorias',
@@ -13,6 +14,7 @@ import { EditcategoriaComponent } from './editcategoria.component';
 })
 export class CategoriasComponent {
 
+  private fireService = inject(FirestoreService);
   categoria: categorias[] = [];
 
   request = {
@@ -28,7 +30,8 @@ export class CategoriasComponent {
 
 
   categorias() {
-    this.tiendaService.getCategoria().subscribe(categorias => {
+    const path = 'categoria';
+    this.fireService.traerColeccion<categorias>(path).subscribe(categorias => {
       this.categoria = categorias;
     });
   }

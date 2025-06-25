@@ -1,6 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,43 +11,46 @@ import Swal from 'sweetalert2';
 export class EditcoleccionComponent {
 
   private dialogRef = inject(MatDialogRef<EditcoleccionComponent>);
-  private tiendaService = inject(TiendaService);
-  
+  private fireService = inject(FirestoreService);
   request = {
-    Nombre: "",
-    Id: this.data.id 
+    coleccion: "",
+    uid: this.data.uid 
   }
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
 
-  guardar() {
-    if (this.request.Nombre == "") {
+  async guardar() {
+    const path = 'coleccion'
+    if (this.request.coleccion == "") {
       this.mostrarMensajeError("Falta El Nombre");
       return;
     }
+    await this.fireService.actualizarDocId(this.request, path, this.request.uid);
+    this.mostrarMensajeVal('Coleccion Editado Correctamente')
+    this.dialogRef.close();
     // Aquí se debería llamar al servicio de tienda para actualizar la categoría
-    this.tiendaService.editarColeccion(this.request).subscribe({
-      next: (registro) => {
-        if (!registro.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: registro.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return;
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: registro.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.dialogRef.close();
-      }
-    })
+    // this.tiendaService.editarColeccion(this.request).subscribe({
+    //   next: (registro) => {
+    //     if (!registro.result) {
+    //       Swal.fire({
+    //         position: "top-end",
+    //         icon: "error",
+    //         title: registro.message,
+    //         showConfirmButton: false,
+    //         timer: 1500
+    //       });
+    //       return;
+    //     }
+    //     Swal.fire({
+    //       position: "top-end",
+    //       icon: "success",
+    //       title: registro.message,
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     });
+    //     this.dialogRef.close();
+    //   }
+    // })
   }
 
   //*Alertas

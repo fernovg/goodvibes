@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TiendaService } from 'src/app/services/tienda.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,40 +10,46 @@ import Swal from 'sweetalert2';
 })
 export class AddcoleccionComponent {
 
-  request = {
-    Nombre: ""
-  }
-
   private dialogRef = inject(MatDialogRef<AddcoleccionComponent>);
-  private tiendaService = inject(TiendaService);
+  private fireService = inject(FirestoreService);
 
+  request = {
+    uid: this.fireService.crearIdDoc(),
+    coleccion: "",
+    status: true
+  }
+  
   guardar() {
-    if (this.request.Nombre == "") {
+    const path = 'coleccion'
+    if (this.request.coleccion == "") {
       this.mostrarMensajeError("Falta El Nombre");
       return
     }
-    this.tiendaService.regiColeccion(this.request).subscribe({
-      next: (registro) => {
-        if (!registro.result) {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: registro.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          return
-        }
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: registro.message,
-          showConfirmButton: false,
-          timer: 1500
-        });
-        this.dialogRef.close();
-      }
-    })
+    this.fireService.crearDocumento(this.request, path, this.request.uid);
+    this.mostrarMensajeVal('Registro de Coleccion Correcto');
+    this.dialogRef.close();
+    // this.tiendaService.regiColeccion(this.request).subscribe({
+    //   next: (registro) => {
+    //     if (!registro.result) {
+    //       Swal.fire({
+    //         position: "top-end",
+    //         icon: "error",
+    //         title: registro.message,
+    //         showConfirmButton: false,
+    //         timer: 1500
+    //       });
+    //       return
+    //     }
+    //     Swal.fire({
+    //       position: "top-end",
+    //       icon: "success",
+    //       title: registro.message,
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     });
+    //     this.dialogRef.close();
+    //   }
+    // })
     // console.log("salir modal");
   }
 

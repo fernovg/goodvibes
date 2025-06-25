@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { limit, orderBy } from '@angular/fire/firestore';
 import { categorias, colecciones, colores, prodTienda, temas } from 'src/app/models/tienda.models';
 import { FirestoreService } from 'src/app/services/firebase.service';
-import { TiendaService } from 'src/app/services/tienda.service';
 
 @Component({
   selector: 'app-tar-prod',
@@ -32,7 +31,7 @@ export class TarProdComponent implements OnInit {
   // ordenar por
   order: string = '';
 
-  constructor(private tiendaService: TiendaService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.getProd();
@@ -51,7 +50,6 @@ export class TarProdComponent implements OnInit {
       this.prodTienda = prodTienda;
       this.filteredProducts = prodTienda; // Inicialmente muestra todos los productos
       this.filterProducts(); // Filtrar productos después de la carga inicial
-      console.log(prodTienda);
     });
   }
 
@@ -59,7 +57,6 @@ export class TarProdComponent implements OnInit {
     const path = 'categoria';
     this.fireService.traerColeccion<categorias>(path).subscribe( categorias => {
       this.categoria = categorias;
-      console.log(categorias);
     })
   }
 
@@ -67,7 +64,6 @@ export class TarProdComponent implements OnInit {
     const path = 'coleccion';
     this.fireService.traerColeccion<colecciones>(path).subscribe( colecciones => {
       this.coleccion = colecciones;
-      console.log(colecciones);
     })
   }
 
@@ -75,7 +71,6 @@ export class TarProdComponent implements OnInit {
     const path = 'tema';
     this.fireService.traerColeccion<temas>(path).subscribe( temas => {
       this.tema = temas;
-      console.log(temas);
     })
   }
 
@@ -83,7 +78,6 @@ export class TarProdComponent implements OnInit {
     const path = 'color';
     this.fireService.traerColeccion<colores>(path).subscribe( colores => {
       this.color = colores;
-      console.log(colores);
     })
   }
 
