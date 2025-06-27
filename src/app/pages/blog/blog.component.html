@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+  <div class="container my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis"routerLink="/inicio">
+            <i class="fa-solid fa-house"></i>
+            <span class="visually-hidden">Inicio</span>
+          </a>
+        </li>
+        <li class="breadcrumb-item">
+          <a class="link-body-emphasis fw-semibold text-decoration-none" routerLink="/galeria">Blogs</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          {{blog.titulo}}
+        </li>
+      </ol>
+    </nav>
+  </div>
+  
+  <div *ngIf="blog" class="blog-detalle-container">
+    <h1 class="blog-title">{{ blog.titulo }}</h1>
+    <p class="blog-meta">Por {{ blog.autor }} | {{ blog.fecha | date: 'fullDate' }}</p>
+
+    <div class="blog-seccion" *ngFor="let sec of blog.secciones">
+      <h2 *ngIf="sec.tipo === 'subtitulo'" class="blog-subtitulo">{{ sec.contenido }}</h2>
+      <p *ngIf="sec.tipo === 'parrafo'" class="blog-parrafo">{{ sec.contenido }}</p>
+      <img
+        *ngIf="sec.tipo === 'imagen'"
+        [src]="sec.contenido"
+        class="blog-imagen"
+        alt="Imagen del blog"
+      />
+    </div>
+
+    <div *ngIf="blog.etiquetas?.length" class="blog-tags">
+      <span *ngFor="let tag of blog.etiquetas">#{{ tag }}</span>
+    </div>
+  </div>
+
+<app-footer></app-footer>

@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { publica } from 'src/app/models/galeria.models';
-import { AuthenticationService } from 'src/app/services/autenticacion.service';
 import { GaleriaService } from 'src/app/services/galeria.service';
 import Swal from 'sweetalert2';
 
@@ -23,7 +22,6 @@ export class EditarpubliComponent {
   constructor(
     private galeriaService: GaleriaService,
     private router: Router,
-    private auth: AuthenticationService,
     private activatedRoute: ActivatedRoute,
   ){}
 

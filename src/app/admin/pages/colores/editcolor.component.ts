@@ -1,7 +1,6 @@
 import { Component, Inject, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/services/firebase.service';
-import { TiendaService } from 'src/app/services/tienda.service';
 import Swal from 'sweetalert2';
 
 @Component({

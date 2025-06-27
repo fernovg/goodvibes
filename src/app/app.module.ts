@@ -21,7 +21,11 @@ import { enviroment } from '../environments/environment.prod';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-
+import { BlogComponent } from './pages/blog/blog.component';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
+import { LOCALE_ID } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +34,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     NosotrosComponent,
     CatalogoComponent,
     LoginComponent,
-    GaleriaComponent
+    GaleriaComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +57,9 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

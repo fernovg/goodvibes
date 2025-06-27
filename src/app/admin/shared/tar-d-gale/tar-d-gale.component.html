@@ -1,24 +1,24 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-        <div class="col-md-3" *ngFor="let gale of galeria">
+        <div class="col-md-3" *ngFor="let gale of blog">
             <div class="card bgcard">
-                <img class="" width="100%" style="border-radius: 5px;" src="{{gale.foto}}" alt="" title="">
+                <!-- <img class="" width="100%" style="border-radius: 5px;" src="{{gale.foto}}" alt="" title=""> -->
                 <div class="card-body">
                     <p class="card-text">
-                        Nombre: {{gale.descripcion}}
+                        Nombre: {{gale.titulo}}
                         <br>
-                        Publicado Por: {{gale.nombre}}
+                        Publicado Por: {{gale.autor}}
                     </p>                   
                 </div>
 
                 <div class="container-card-footer align-items-center">
                     <div class="btn-group">
-                      <a [routerLink]="['../verpublicacion', gale.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a>
-                      <a [routerLink]="['../editarpublicacion', gale.id]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a>
-                      <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(gale)"><i class="fa-solid fa-trash"></i></button>
+                        <!-- <a [routerLink]="['../verpublicacion', gale.uid]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black" ><i class="fa-solid fa-eye"></i></button></a> -->
+                        <!-- <a [routerLink]="['../editarpublicacion', gale.uid]" class="text-decoration-none"><button type="button" class="btn btn-sm btnbg text-black"><i class="fa-solid fa-file-pen"></i></button></a> -->
+                        <button type="button" class="btn btn-sm btnbg text-black" (click)="borrar(gale)"><i class="fa-solid fa-trash"></i></button>
                     </div>
-                    <small class="text-body-secondary">{{gale.fecha | date}} {{gale.hora}}</small>
+                    <small class="text-body-secondary">{{gale.fecha | date}}</small>
                 </div>
             </div>
         </div>

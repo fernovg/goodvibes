@@ -38,7 +38,7 @@ const routes: Routes = [
         canActivate: [ AuthGuard ],
         component: EditarProdComponent
       },{
-        path: 'verproducto/:Id',
+        path: 'verproducto/:uid',
         canActivate: [ AuthGuard ],
         component: VerProdComponent
       },{

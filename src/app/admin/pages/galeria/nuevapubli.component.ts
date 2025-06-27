@@ -1,7 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/autenticacion.service';
-import { GaleriaService } from 'src/app/services/galeria.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreService } from 'src/app/services/firebase.service';
+import { Blog } from 'src/app/models/galeria.models';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,6 +12,12 @@ import Swal from 'sweetalert2';
 })
 export class NuevapubliComponent {
 
+  private fireService = inject(FirestoreService);
+  private authfire = inject(AuthService)
+
+  nombre: string | undefined;
+  foto: string | undefined;
+
   request = {
     Foto: "",
     Descripcion: "",
@@ -18,20 +25,18 @@ export class NuevapubliComponent {
   }
 
   constructor(
-    private galeriaService: GaleriaService,
     private router: Router,
-    private auth: AuthenticationService,
-  ){}
+  ) { }
 
-  ngOnInit(): void {
-    this.verificarConexion();
+  async ngOnInit() {
+    const userCredential = await this.authfire.getUserData()
+    this.nombre = userCredential.Nombre;
+    this.foto = userCredential.foto;
   }
 
   @ViewChild('filepicker', { static: false }) uploader!: ElementRef;
 
   base: string = "";
-  base2: string = "";
-  base3: string = "";
 
   addFile() {
     this.uploader.nativeElement.click();
@@ -65,121 +70,108 @@ export class NuevapubliComponent {
     }
   }
 
-      //! FIN FOTO
+  onImageSelected(event: any, index: number) {
+    const selected = event.target.files[0];
+    const reader = new FileReader();
 
-    //* Uso sin conexion
-    verificarConexion() {
-      if (navigator.onLine) {
-        // Si hay conexión al cargar el componente, intentar enviar datos guardados
-        this.enviarDatosGuardados();
+    if (selected.size < 2000000) {
+      const ext = selected.type.split('/').pop().toLowerCase();
+      if (['jpg', 'jpeg', 'png'].includes(ext)) {
+        reader.readAsDataURL(selected);
+        reader.onload = () => {
+          const base64 = reader.result?.toString() || '';
+          this.secciones[index].contenido = base64;
+        };
+      } else {
+        this.mostrarMensajeError("Formato de imagen incorrecto");
       }
+    } else {
+      this.mostrarMensajeError("Imagen demasiado pesada");
     }
-  
-    guardarLocalmente() {
-      const datosSinConexion = {
-        Descripcion: this.request.Descripcion,
-        Foto: this.base
-      };
-  
-      // Almacenar datos localmente
-      localStorage.setItem('datosSinConexion', JSON.stringify(datosSinConexion));
-  
-      this.mostrarNotificacionPush('Datos guardados localmente', 'Los datos se guardarán cuando haya conexión a Internet.');
-    }
-  
-    enviarDatosGuardados() {
-      const datosSinConexionString = localStorage.getItem('datosSinConexion');
-  
-      if (datosSinConexionString) {
-        const datosSinConexion = JSON.parse(datosSinConexionString);
-  
-        this.galeriaService.getPubli(datosSinConexion).subscribe({
-          next: (resPubli) => {
-            // Resto del código para manejar la respuesta
-            // ...
-            this.router.navigate(['/dashboard/productos']);
-            this.mostrarNotificacionPush('Nuevo producto registrado', '¡Se ha registrado un nuevo producto!');
-            // Eliminar datos guardados localmente después de enviarlos
-            localStorage.removeItem('datosSinConexion');
-          }
-        });
-      }
+  }
+  //! FIN FOTO
+
+  titulo = '';
+  secciones: { tipo: 'parrafo' | 'subtitulo' | 'imagen'; contenido: string }[] = [];
+  etiquetasInput = '';
+
+  agregarSeccion() {
+    this.secciones.push({ tipo: 'parrafo', contenido: '' });
+  }
+
+  eliminarSeccion(index: number) {
+    this.secciones.splice(index, 1);
+  }
+
+  guardar() {
+    // Validaciones básicas
+    if (!this.titulo.trim()) {
+      this.mostrarMensajeError("Falta el título del blog");
+      return;
     }
 
-    guardar(){
-      if (!navigator.onLine) {
-        // No hay conexión a Internet, guardar datos localmente
-        this.guardarLocalmente();
-        return;
-      }
-      
-      this.request.Matricula = this.auth.currentUserValue.Matricula !== undefined ? this.auth.currentUserValue.Matricula.toString() : '';
+    if (this.secciones.length === 0) {
+      this.mostrarMensajeError("Agrega al menos una sección");
+      return;
+    }
 
-      this.request.Foto=this.base;
-      
-      if (this.request.Descripcion == "" && this.request.Foto == "") {
-        this.mostrarMensajeError("Falta La Descripcion o Foto");
-        return
-      }
-      this.galeriaService.getPubli(this.request).subscribe({
-        next:(resPubli)=> {
-          if (!resPubli.result) {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: resPubli.message,
-              showConfirmButton: false,
-              timer: 1500
-            });
-            return
-          } 
-          this.mostrarNotificacionPush('Nueva publicacion', '¡Se ha publicado!');
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: resPubli.message,
-            showConfirmButton: false,
-            timer: 1500
-          });
-          this.router.navigate(['/dashboard/galerias'])
-        }
+  const seccionesValidas = this.secciones
+    .filter(sec => sec.contenido && sec.contenido.trim() !== '')
+    .map(sec => ({
+      tipo: sec.tipo,
+      contenido: sec.contenido.trim()
+    }));
+
+
+    if (seccionesValidas.length === 0) {
+      this.mostrarMensajeError("Todas las secciones están vacías");
+      return;
+    }
+    const uid = this.fireService.crearIdDoc();
+    const blog: Blog = {
+      uid: uid,
+      foto: this.foto || 'Anónimo',
+      titulo: this.titulo,
+      autor:  this.nombre || 'Anónimo',  // O usa uid si prefieres
+      fecha: new Date().toISOString(),  // Formato ISO
+      secciones: seccionesValidas,
+      etiquetas: this.etiquetasInput
+        .split(',')
+        .map(et => et.trim())
+        .filter(et => et !== '')
+    };
+
+    const path = 'blog';
+
+    this.fireService.crearDocumento(blog, path, uid)
+      .then(() => {
+        this.mostrarMensajeVal('Publicacion Correcto');
+        this.router.navigate(['/dashboard/galerias']);
       })
-    }
-
-    //*Alertas
-    mostrarMensajeError(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
+      .catch((err) => {
+        console.error('Error al guardar el blog:', err);
+        this.mostrarMensajeError('No se pudo guardar el blog')
       });
-    }
-  
-    mostrarMensajeVal(mensaje: string) {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: mensaje,
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  
-    mostrarNotificacionPush(titulo: string, mensaje: string) {
-      // Verificar si el navegador admite notificaciones
-      if ('Notification' in window) {
-        Notification.requestPermission().then(function (permission) {
-          if (permission === 'granted') {
-            // Crear y mostrar la notificación
-            var notificacion = new Notification(titulo, {
-              body: mensaje
-            });
-          }
-        });
-      }
-    }
+  }
 
+  //*Alertas
+  mostrarMensajeError(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "error",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 
+  mostrarMensajeVal(mensaje: string) {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: mensaje,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
 }

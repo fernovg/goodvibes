@@ -6,6 +6,7 @@ import { CatalogoComponent } from './pages/catalogo/catalogo.component';
 import { NosotrosComponent } from './pages/nosotros/nosotros.component';
 import { LoginComponent } from './pages/login/login.component';
 import { GaleriaComponent } from './pages/galeria/galeria.component';
+import { BlogComponent } from './pages/blog/blog.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,9 @@ const routes: Routes = [
   },{
     path: 'galeria',
     component: GaleriaComponent,
+  },{
+    path: 'galeria/:uid',
+    component: BlogComponent,
   },{
     path: 'iniciosesion',
     component: LoginComponent,

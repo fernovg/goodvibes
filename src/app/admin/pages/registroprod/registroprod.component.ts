@@ -30,6 +30,7 @@ export class RegistroprodComponent {
     foto1: "",
     foto2: "",
     foto3: "",
+    timestamp: new Date().toISOString()
   }
 
   constructor(

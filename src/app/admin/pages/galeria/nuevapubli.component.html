@@ -3,31 +3,31 @@
 <br>
 
 <div class="container my-4">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis" href="dashboard/inicio">
-            <i class="fa-solid fa-house"></i>
-            <span class="visually-hidden">Inicio</span>
-          </a>
-        </li>
-        <li class="breadcrumb-item">
-          <a class="link-body-emphasis fw-semibold text-decoration-none" href="dashboard/galerias">Galeria</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Publicacion
-        </li>
-      </ol>
-    </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-chevron p-3 rounded-3">
+      <li class="breadcrumb-item">
+        <a class="link-body-emphasis" href="dashboard/inicio">
+          <i class="fa-solid fa-house"></i>
+          <span class="visually-hidden">Inicio</span>
+        </a>
+      </li>
+      <li class="breadcrumb-item">
+        <a class="link-body-emphasis fw-semibold text-decoration-none" href="dashboard/galerias">Galeria</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Publicacion
+      </li>
+    </ol>
+  </nav>
 </div>
 
 <div class="container">
-    
-    <div class="text-center">
-        <h1>Registro de Producto</h1>
-    </div>
 
-    <div class="d-flex justify-content-center">
+  <div class="text-center">
+    <h1>Nuevo Blog</h1>
+  </div>
+
+  <!-- <div class="d-flex justify-content-center">
         <div class="card p-5">
 
             <form action="procesar_registro.php" method="POST" enctype="multipart/form-data">
@@ -49,6 +49,72 @@
             </form>
 
         </div>
-    </div>
+    </div> -->
+  <div class="d-flex justify-content-center">
+    <div class="card p-5">
+      <form action="">
 
-</div>
+        <div class="form-gruop">
+          <label for="stock">Titulo:</label>
+          <input type="text" class="form-control" name="titulo" [(ngModel)]="titulo" placeholder="Título" />
+        </div>
+
+        <div class="form-group" *ngFor="let seccion of secciones; let i = index">
+
+          <label for="precio">Tipo de Seccion:</label>
+          <div class="input-group">
+            <select class="form-select" [(ngModel)]="secciones[i].tipo" name="tipo{{i}}">
+              <!-- (change)="logTipoSeleccionado(i)"> -->
+              <option value="" selected disabled>Selecciona un tema</option>
+              <option value="subtitulo">Subtítulo</option>
+              <option value="parrafo">Párrafo</option>
+              <option value="imagen">Imagen</option>
+            </select>
+          </div>
+
+          <div class="input-group mb-3" *ngIf="secciones[i].tipo!== 'imagen'">
+            <span class="input-group-text" id="basic-addon1" (click)="eliminarSeccion(i)"><i class="fa-solid fa-trash"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="secciones[i].contenido" name="contenido{{i}}"
+              placeholder="Contenido" aria-label="Contenido" aria-describedby="basic-addon1">
+          </div>
+
+          <div class="mb-3" *ngIf="secciones[i].tipo === 'imagen'">
+            <span class="input-group-text" id="basic-addon1" (click)="eliminarSeccion(i)"><i class="fa-solid fa-trash"></i></span>
+            <input class="form-control" id="formFile" type="file" accept="image/*" (change)="onImageSelected($event, i)"
+              aria-label="foto" aria-describedby="basic-addon1">
+            <img *ngIf="seccion.contenido" [src]="secciones[i].contenido" style="max-width: 200px; margin-top: 10px;" />
+          </div>
+
+        </div>
+        <br>
+        <button class="btn btn-solid" (click)="agregarSeccion()"><i class="fa-solid fa-plus"></i> Añadir bloque</button>
+        <br><br>
+        <div class="form-gruop">
+          <label for="stock">Etiquetas:</label>
+          <input type="text" class="form-control" [(ngModel)]="etiquetasInput" name="etiquetasInput"
+            placeholder="separadas por coma" />
+        </div>
+        <hr>
+        <button type="submit" class="btn btnbg d-flex" (click)="guardar()">Guardar Blog</button>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- <div *ngFor="let seccion of secciones; let i = index">
+    <select [(ngModel)]="seccion.tipo">
+      <option value="subtitulo">Subtítulo</option>
+      <option value="parrafo">Párrafo</option>
+      <option value="imagen">Imagen (URL)</option>
+    </select>
+
+    <input type="text" [(ngModel)]="seccion.contenido" placeholder="Contenido" />
+
+    <button (click)="eliminarSeccion(i)">🗑</button>
+  </div>
+
+  <button (click)="agregarSeccion()">➕ Añadir bloque</button>
+
+  <input type="text" [(ngModel)]="etiquetasInput" placeholder="Etiquetas separadas por coma" />
+
+</div> -->

@@ -1,23 +1,19 @@
+<div class="container">
+    <div class="blog-preview-container">
+        <div *ngFor="let blog of blog" class="blog-card" [routerLink]="[blog.uid]">
+            <img *ngIf="getPrimeraImagen(blog)" [src]="getPrimeraImagen(blog)" alt="Imagen del blog"
+                class="preview-image" />
 
-<div class="container sp-puli d-flex justify-content-center" *ngFor="let publi of galeria">
-    <div class="card">
-        <div class="card-header conten-header">
-            <img *ngIf="publi.fotop" src="{{publi.fotop}}" style="border-radius: 100%;" alt="{{publi.nombre}}" width="40px">
-            <div class="conten-header-text">
-                <h3 class="card-title">{{publi.nombre}}</h3>
+            <div class="blog-content">
+                <h3 class="blog-title">{{ blog.titulo }}</h3>
+                <p class="blog-meta">Por {{ blog.autor }} | {{ blog.fecha | date:'mediumDate' }}</p>
+
+                <p class="blog-summary">{{ getResumen(blog) }}</p>
+
+                <div *ngIf="blog.etiquetas?.length" class="blog-tags">
+                    <span *ngFor="let tag of blog.etiquetas">#{{ tag }}</span>
+                </div>
             </div>
-        </div>
-        
-        <!-- Condición para mostrar la imagen si publi.foto no está vacío -->
-        <img *ngIf="publi.foto" src="{{publi.foto}}" alt="{{publi.descripcion}}">
-
-        <div class="card-body conten-caption" *ngIf="publi.descripcion">
-            <p class="card-text" *ngIf="publi.foto">{{publi.nombre}}: </p>
-            <p class="card-text">{{publi.descripcion}}</p>
-        </div>
-
-        <div class="card-body d-flex justify-content-end">
-            <p>{{publi.fecha | date}}</p>
         </div>
     </div>
 </div>

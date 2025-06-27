@@ -1,14 +1,9 @@
 export interface prodTienda {
-    id: string;
     uid: string;
     Nombre: string;
     descripcion: string;
     precio: string;
     stock: string;
-    idcategoria: string;
-    idcolor: string;
-    idcoleccion: string;
-    idtema: string;
     uidcategoria: string;
     uidcolor: string;
     uidcoleccion: string;
@@ -26,16 +21,11 @@ export interface prodTienda {
 
 
 export interface producto {
-    id: string;
     uid: string;
     Nombre: string;
     descripcion: string;
     precio: string;
     stock: string;
-    idcategoria: string;
-    idcolor: string;
-    idcoleccion: string;
-    idtema: string;
     uidcategoria: string;
     uidcolor: string;
     uidcoleccion: string;
@@ -67,26 +57,22 @@ export class editarP {
 }
 
 export interface categorias {
-    id: string;
     uid: string;
     Nombre: string;
 }
 
 export interface colecciones {
-    id: string;
     uid: string;
     coleccion: string;
     estado: string;
 }
 
 export interface temas {
-    id: string;
     uid: string;
     tema: string;
 }
 
 export interface colores {
-    id: string;
     uid: string;
     color: string;
 }

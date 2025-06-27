@@ -1,27 +1,63 @@
-.card{
-    width: 400px;
+.blog-preview-container {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
-.sp-puli{
-    padding-bottom: 20px;
+.blog-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease;
 }
 
-.conten-header{
+.blog-card:hover {
+    transform: scale(1.02);
+}
+
+.preview-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.blog-content {
+    padding: 1rem;
+}
+
+.blog-title {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.blog-meta {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0.5rem 0;
+}
+
+.blog-summary {
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    color: #444;
+}
+
+.blog-tags {
+    margin-top: 0.5rem;
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
 }
 
-.conten-header-text{
-    display: flex;
-    padding-top: 15px;
-    padding-left: 10px;
-}
-
-.conten-caption{
-    display: flex;
-}
-
-.conten-caption .card-text{
-    display: flex;
-    padding: 2px;
+.blog-tags span {
+    background-color: #f0f0f0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
 }

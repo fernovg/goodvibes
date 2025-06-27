@@ -1,13 +1,19 @@
-.card{
-    display: flex;
-    width: 500px;
+.card {
+  display: flex;
+  width: 500px;
 }
 
-.btnbg{
-    border: 1px solid #b79058;
-  }
+.btnbg {
+  border: 1px solid var(--500);
+}
 
-  .btnbg:hover{
-    border: 1px solid #b79058;
-    background-color: #b79058;
-  }
+.btnbg:hover {
+  color: white;
+  border: 1px solid var(--500);
+  background-color: var(--500);
+}
+
+.btn-solid {
+  color: var(--50);
+  background-color: var(--500);
+}

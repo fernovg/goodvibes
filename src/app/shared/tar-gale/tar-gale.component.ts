@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { galeria } from 'src/app/models/galeria.models';
+import { Component, inject } from '@angular/core';
+import { orderBy } from '@angular/fire/firestore';
+import { Blog } from 'src/app/models/galeria.models';
+import { FirestoreService } from 'src/app/services/firebase.service';
 import { GaleriaService } from 'src/app/services/galeria.service';
 
 @Component({
@@ -9,20 +11,34 @@ import { GaleriaService } from 'src/app/services/galeria.service';
 })
 export class TarGaleComponent {
 
-  galeria: galeria[] = [];
+  private fireService = inject(FirestoreService);
+  blog: Blog[] = [];
 
-  constructor(
-    private galeriaService: GaleriaService,
-  ){}
+  constructor(){}
 
   ngOnInit(): void {
-    this.getProd();
+    this.getBlogs();
   }
 
-  getProd(){
-    this.galeriaService.getGaleria().subscribe( galeria => {
-      this.galeria = galeria;
+  getBlogs(){
+    const path = 'blog';
+    this.fireService.traerColeccionW<Blog>(path,[orderBy('fecha', 'desc')]).subscribe( blog => {
+      this.blog = blog;
     })
   }
+
+  // Obtener primera imagen del blog
+getPrimeraImagen(blog: Blog): string | null {
+  const img = blog.secciones.find(sec => sec.tipo === 'imagen');
+  return img ? img.contenido : null;
+}
+
+// Obtener resumen (primer párrafo o subtítulo)
+getResumen(blog: Blog): string {
+  const sec = blog.secciones.find(s =>
+    s.tipo === 'subtitulo' || s.tipo === 'parrafo'
+  );
+  return sec ? sec.contenido.slice(0, 140) + '...' : '';
+}
 
 }
