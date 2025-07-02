@@ -33,7 +33,7 @@
           <div class="col-md-6">
               <h2>Nombre: {{producto?.Nombre}}</h2>
               
-              <p>Precio: {{producto?.precio | currency }}</p>
+              <p>Precio: {{producto?.precio | currency:'MXN':'symbol':'1.2-2' }}</p>
               <p>Disponibilidad: {{producto?.stock}}</p>
               <p>Categoria: {{producto?.categoria}}</p>
           </div>

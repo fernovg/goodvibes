@@ -33,7 +33,7 @@
       <div class="row mt-5">
         <div class="col-md-6">
             <h2>{{producto?.Nombre}}</h2>
-            <p>{{producto?.precio | currency }}</p>
+            <p>{{producto?.precio | currency:'MXN':'symbol':'1.2-2' }}</p>
             <div *ngIf="producto as p">
               <p *ngIf="!p.stock || +p.stock === 0">Sin stock</p>
               <p *ngIf="+p.stock > 0 && +p.stock < 49">Pocas unidades</p>

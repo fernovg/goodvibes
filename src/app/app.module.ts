@@ -24,8 +24,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { BlogComponent } from './pages/blog/blog.component';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEs, 'es');
-import { LOCALE_ID } from '@angular/core';
+registerLocaleData(localeEs, 'es-MX');
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +58,8 @@ import { LOCALE_ID } from '@angular/core';
     provideFirestore(() => getFirestore())
   ],
   providers: [
-    { provide: LOCALE_ID, useValue: 'es' }
+    { provide: LOCALE_ID, useValue: 'es-MX' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' }
   ],
   bootstrap: [AppComponent]
 })
